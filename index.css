@@ -654,7 +654,7 @@ body {
 
 .bottom-left-text,
 .bottom-right-text {
-  font-size: clamp(1.75rem, 4.5vw, 4.75rem); /* Proportional 12px smaller than original (40px->28px, 88px->76px) */
+  font-size: clamp(1rem, 3.5vw, 4rem); /* Proportional 24px smaller than original (40px->16px, 88px->64px) */
   font-weight: 300; /* Thinner elegant typography */
   color: var(--color-white);
   position: absolute;
