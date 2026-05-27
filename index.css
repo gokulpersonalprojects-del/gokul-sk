@@ -774,6 +774,14 @@ body {
   .mask-svg-mobile {
     display: block;
   }
+  
+  /* Force exact 100% dynamic viewport height on mobile for perfect fullscreen presentation */
+  .video-banner-section,
+  .video-wrapper,
+  .video-banner {
+    height: 100vh !important;
+    height: 100dvh !important;
+  }
 }
 
 /* ==========================================================================
