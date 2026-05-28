@@ -2170,13 +2170,7 @@ body {
 }
 
 @media screen and (max-width: 375px) {
-  /* Responsive Hero Text spacing for Extremely Narrow Mobile Devices */
-  .g-mask-mobile-a {
-    transform: translate(14px, 0) !important;
-  }
-  .g-mask-mobile-t {
-    transform: translate(-14px, 0) !important;
-  }
+  /* Spacing is handled natively and symmetrically by textLength attributes */
 }
 
 /* ==========================================================================

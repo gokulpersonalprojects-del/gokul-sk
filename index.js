@@ -45,6 +45,24 @@ const initInteractionEngine = () => {
   const sections = document.querySelectorAll('section');
   const sectionTriggers = document.querySelectorAll('[data-section]');
 
+  // --- BULLETPROOF SVG MASK REPAINT FOR MOBILE SAFARI ---
+  const forceSvgRepaint = () => {
+    const svgs = document.querySelectorAll('.mask-svg, .mask-svg-mobile');
+    svgs.forEach(svg => {
+      const parent = svg.parentNode;
+      if (parent) {
+        const nextSibling = svg.nextSibling;
+        parent.removeChild(svg);
+        parent.insertBefore(svg, nextSibling);
+      }
+    });
+  };
+  forceSvgRepaint();
+  window.addEventListener('load', forceSvgRepaint);
+  if (document.fonts) {
+    document.fonts.ready.then(forceSvgRepaint);
+  }
+
   // --- HERO VIDEO PERMISSION FAIL-SAFE ---
   const heroVideo = document.querySelector('.video-banner');
   if (heroVideo) {
