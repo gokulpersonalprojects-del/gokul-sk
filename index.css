@@ -539,7 +539,7 @@ body {
 .mask-svg-mobile {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Proportional scaling without distortion */
+  object-fit: fill; /* Allows the SVG to stretch precisely to the viewport edges without any cropping */
 }
 
 .mask-svg {
