@@ -85,6 +85,57 @@ const initInteractionEngine = () => {
     });
   }
 
+  // --- PILL VIDEOS FAIL-SAFE ---
+  const pillPills = document.querySelectorAll('.video-badge-pill');
+  const pillFallbacks = {
+    'pill_video_1.mp4': 'https://impactbbdo.com/wp-content/uploads/2025/06/Intro-Video_1440x734_CLEAN_NO-LOGO.mp4',
+    'pill_video_2.mp4': 'https://impactbbdo.com/wp-content/uploads/2025/06/We-Are-BBDO_Etihad_1280x720.mp4',
+    'pill_video_3.mp4': 'https://impactbbdo.com/wp-content/uploads/2025/05/We-Are-BBDO_GMO-UAE-Flying-Taxi_1280x720-2.mp4'
+  };
+
+  pillPills.forEach(pill => {
+    const video = pill.querySelector('video');
+    const localSrc = pill.getAttribute('data-video');
+    if (video && localSrc && pillFallbacks[localSrc]) {
+      const fallbackUrl = pillFallbacks[localSrc];
+      
+      const triggerPillFallback = () => {
+        const currentSrc = video.currentSrc || video.getAttribute('src') || '';
+        if (!currentSrc.includes('http') && currentSrc !== fallbackUrl) {
+          video.removeAttribute('src');
+          const sources = video.querySelectorAll('source');
+          sources.forEach(source => source.parentNode.removeChild(source));
+          
+          video.setAttribute('src', fallbackUrl);
+          video.load();
+          video.play().catch(() => {});
+          
+          // Also update data-video attribute for the modal popup player
+          pill.setAttribute('data-video', fallbackUrl);
+        }
+      };
+
+      // Listen for error loading local file
+      video.addEventListener('error', triggerPillFallback, true);
+      
+      // Immediate fallback if error is already triggered
+      if (video.error || video.networkState === 4) {
+        triggerPillFallback();
+      }
+
+      // Bulletproof 2-second timeout: if local file is missing, load online fallback
+      const timer = setTimeout(() => {
+        if (video.readyState < 1) { // HAVE_NOTHING
+          triggerPillFallback();
+        }
+      }, 2000);
+
+      video.addEventListener('loadedmetadata', () => {
+        clearTimeout(timer);
+      });
+    }
+  });
+
 
 
   // ==========================================================================
