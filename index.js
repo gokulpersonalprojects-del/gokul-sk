@@ -1189,6 +1189,182 @@ const initInteractionEngine = () => {
   };
 
   initCendrolCaseStudy();
+
+  // ==========================================================================
+  // 10. INTERACTIVE UPSC COMPANION CASE STUDY SYSTEM
+  // ==========================================================================
+  const initUPSCCompanion = () => {
+    // A. UPSC Mode Switcher (Tour ↔ Deep Dive)
+    const upscModeSwitcher = document.querySelector('.upsc-mode-switcher');
+    if (!upscModeSwitcher) return;
+
+    const modeButtons = upscModeSwitcher.querySelectorAll('.case-mode-btn');
+    const slider = upscModeSwitcher.querySelector('.upsc-slider');
+    const tourPane = document.getElementById('upsc-pane-upsc-tour');
+    const deepPane = document.getElementById('upsc-pane-upsc-deep');
+
+    const updateSlider = (activeBtn) => {
+      if (slider && activeBtn) {
+        slider.style.width = `${activeBtn.offsetWidth}px`;
+        slider.style.left = `${activeBtn.offsetLeft}px`;
+      }
+    };
+
+    // Set initial position
+    const activeBtn = upscModeSwitcher.querySelector('.case-mode-btn.active');
+    if (activeBtn) setTimeout(() => updateSlider(activeBtn), 300);
+
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.getAttribute('data-mode');
+        modeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateSlider(btn);
+
+        const showPane = mode === 'upsc-tour' ? tourPane : deepPane;
+        const hidePane = mode === 'upsc-tour' ? deepPane : tourPane;
+
+        if (hidePane) hidePane.classList.remove('active');
+        if (showPane) {
+          showPane.classList.add('active');
+          if (typeof gsap !== 'undefined') {
+            gsap.fromTo(showPane, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+          }
+        }
+
+        if (typeof ScrollTrigger !== 'undefined') {
+          setTimeout(() => ScrollTrigger.refresh(), 200);
+        }
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      const activeBtn = upscModeSwitcher.querySelector('.case-mode-btn.active');
+      if (activeBtn) updateSlider(activeBtn);
+    });
+
+    // B. Device Mode Tab Selector (Screen Explorer vs Live Video Demo)
+    const tabs = document.querySelectorAll('.upsc-tab-btn');
+    const explorerContent = document.getElementById('upsc-explorer-content');
+    const videoPane = document.getElementById('upsc-video-pane');
+    const demoVideo = document.getElementById('upsc-demo-video');
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-upsc-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (tab === 'demo') {
+          if (explorerContent) explorerContent.classList.remove('active');
+          if (videoPane) videoPane.classList.add('active');
+          if (demoVideo) {
+            demoVideo.play().catch(() => {});
+          }
+        } else {
+          if (explorerContent) explorerContent.classList.add('active');
+          if (videoPane) videoPane.classList.remove('active');
+          if (demoVideo) {
+            demoVideo.pause();
+          }
+        }
+      });
+    });
+
+    // C. Hotspot Swapping Logic
+    const hotspots = document.querySelectorAll('.upsc-hotspot');
+    const detailCards = document.querySelectorAll('.upsc-details-card');
+    const screenImg = document.querySelector('.upsc-explorer-screen-img');
+
+    const upscScreenMap = {
+      '1': 'https://framerusercontent.com/images/BlHKUcKAhGRXRgmgmPvNd4QN0.png',
+      '2': 'https://framerusercontent.com/images/n1fTFrLvMO2ePIv5Ut2swuAPgQ.png',
+      '3': 'https://framerusercontent.com/images/n4hXXzbAY1IBE7MzthqFPmAkkNo.jpg',
+      '4': 'https://framerusercontent.com/images/ZBJQxKvwANWPhQDwvjIJeyDd8f8.png'
+    };
+
+    hotspots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const id = dot.getAttribute('data-upsc-hotspot');
+        if (!id) return;
+
+        hotspots.forEach(h => h.classList.remove('active'));
+        dot.classList.add('active');
+
+        if (screenImg && upscScreenMap[id]) {
+          screenImg.setAttribute('src', upscScreenMap[id]);
+          if (typeof gsap !== 'undefined') {
+            gsap.fromTo(screenImg, { opacity: 0.8 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+          }
+        }
+
+        detailCards.forEach(card => {
+          card.classList.remove('active');
+          if (card.getAttribute('data-upsc-card') === id) {
+            card.classList.add('active');
+            if (typeof gsap !== 'undefined') {
+              gsap.fromTo(card, { opacity: 0, x: 15 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' });
+            }
+          }
+        });
+      });
+    });
+
+    // D. 4-Stage Study Stepper Logic
+    const stepNodes = document.querySelectorAll('.upsc-step-node');
+    const stepCards = document.querySelectorAll('[data-step-card].step-display-card');
+    const progressBar = document.querySelector('.upsc-progress-line');
+
+    stepNodes.forEach((node) => {
+      node.addEventListener('click', () => {
+        const stepValue = node.getAttribute('data-step');
+        if (!stepValue) return;
+
+        const parentStepper = node.closest('.upsc-stepper');
+        if (!parentStepper) return;
+
+        const localNodes = parentStepper.querySelectorAll('.upsc-step-node');
+        const localCards = parentStepper.querySelectorAll('.step-display-card');
+
+        // Find step index (1-based)
+        let activeIdx = 1;
+        localNodes.forEach((n, idx) => {
+          if (n === node) {
+            activeIdx = idx + 1;
+          }
+        });
+
+        // Update classes on stepper nodes
+        localNodes.forEach((n, idx) => {
+          n.classList.remove('active', 'completed');
+          if (idx + 1 < activeIdx) {
+            n.classList.add('completed');
+          } else if (idx + 1 === activeIdx) {
+            n.classList.add('active');
+          }
+        });
+
+        // Update timeline progress bar fill
+        if (progressBar && localNodes.length > 1) {
+          const percentage = ((activeIdx - 1) / (localNodes.length - 1)) * 100;
+          progressBar.style.width = `${percentage}%`;
+        }
+
+        // Swap cards
+        localCards.forEach(card => {
+          card.classList.remove('active');
+          if (card.getAttribute('data-step-card') === stepValue) {
+            card.classList.add('active');
+            if (typeof gsap !== 'undefined') {
+              gsap.fromTo(card, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+            }
+          }
+        });
+      });
+    });
+  };
+
+  initUPSCCompanion();
 };
 
 

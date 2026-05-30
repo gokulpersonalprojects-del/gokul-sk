@@ -1804,12 +1804,19 @@
               <div class="hotspot-explorer-grid upsc-explorer-grid">
                 <!-- Device Column -->
                 <div class="explorer-device-col">
+                  <!-- Live Demo vs Hotspot Switcher Tabs -->
+                  <div class="upsc-control-tabs">
+                    <button class="upsc-tab-btn active" data-upsc-tab="explorer">📱 Screen Explorer</button>
+                    <button class="upsc-tab-btn" data-upsc-tab="demo">🎬 AI Syllabus Demo</button>
+                  </div>
+                  
                   <div class="device-phone-shell upsc-phone-shell">
                     <div class="device-notch"></div>
                     <div class="device-screen-screen">
-                      <div class="device-explorer-content active">
-                        <!-- UPSC Screen Image (swapped dynamically via JS) -->
-                        <img class="upsc-explorer-screen-img explorer-phone-screen-img" src="upsc_prep.jpg" alt="UPSC Companion Screen">
+                      <!-- Hotspot Explorer Content -->
+                      <div class="device-explorer-content active" id="upsc-explorer-content">
+                        <!-- UPSC High Fidelity Screen Image (swapped dynamically via JS) -->
+                        <img class="upsc-explorer-screen-img explorer-phone-screen-img" src="https://framerusercontent.com/images/BlHKUcKAhGRXRgmgmPvNd4QN0.png" alt="UPSC Companion Screen">
 
                         <!-- Hotspot 1: Home Dashboard -->
                         <div class="hotspot-dot upsc-hotspot active" data-upsc-hotspot="1" style="top: 40px; left: 30px;" title="Home Dashboard">
@@ -1830,6 +1837,11 @@
                         <div class="hotspot-dot upsc-hotspot" data-upsc-hotspot="4" style="bottom: 40px; right: 30px;" title="Progress Analytics">
                           <div class="hotspot-pulse upsc-pulse"></div>
                         </div>
+                      </div>
+                      
+                      <!-- Video Demo Pane -->
+                      <div class="upsc-video-pane" id="upsc-video-pane">
+                        <video class="upsc-device-video" id="upsc-demo-video" loop muted playsinline src="https://framerusercontent.com/assets/QpMTNHuoGlxDpUNZ26Azy3J2OV8.mp4"></video>
                       </div>
                     </div>
                   </div>

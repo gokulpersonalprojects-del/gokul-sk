@@ -5238,3 +5238,393 @@ body {
     gap: 2rem;
   }
 }
+
+/* ==========================================================================
+   UPSC COMPANION APP CUSTOM DESIGN SYSTEM
+   ========================================================================== */
+:root {
+  --color-upsc-amber: #f59e0b;
+  --color-upsc-amber-glow: rgba(245, 158, 11, 0.4);
+  --color-upsc-teal: #0d9488;
+  --color-upsc-teal-glow: rgba(13, 148, 136, 0.3);
+}
+
+.upsc-case-container {
+  position: relative;
+}
+
+/* UPSC Mode Switcher Custom Slider */
+.upsc-mode-switcher {
+  position: relative;
+  background-color: rgba(22, 22, 21, 0.4);
+  border: 1px solid rgba(250, 250, 250, 0.05);
+  border-radius: 30px;
+  padding: 4px;
+  display: inline-flex;
+  gap: 4px;
+  backdrop-filter: blur(20px);
+  margin: 2rem auto;
+}
+
+.upsc-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: calc(100% - 8px);
+  background-color: var(--color-upsc-amber) !important;
+  box-shadow: 0 4px 15px var(--color-upsc-amber-glow);
+  border-radius: 26px;
+  transition: all 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 1;
+}
+
+.upsc-mode-btn {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(250, 250, 250, 0.55);
+  background: none;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 26px;
+  cursor: pointer;
+  transition: color 0.4s ease;
+  position: relative;
+  z-index: 2;
+  text-transform: uppercase;
+}
+
+.upsc-mode-btn:hover {
+  color: var(--color-white);
+}
+
+.upsc-mode-btn.active {
+  color: var(--color-white) !important;
+}
+
+/* Screen Explorer Grid */
+.upsc-explorer-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 3.5rem;
+  margin-top: 3rem;
+  align-items: center;
+}
+
+/* Device Mockup Shell */
+.upsc-phone-shell {
+  background-color: #060606;
+  border: 10px solid #222221;
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.95), 0 0 40px rgba(245, 158, 11, 0.05);
+  aspect-ratio: 9/19.5;
+  width: 100%;
+  border-top-color: #2c2c2a;
+}
+
+.upsc-phone-shell::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to bottom, rgba(250, 250, 250, 0.02) 0%, rgba(250, 250, 250, 0) 100%);
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* Live Video Container inside Phone Frame */
+.upsc-video-pane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  display: none;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.upsc-video-pane.active {
+  display: block;
+}
+
+.upsc-device-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Pulse Hotspots */
+.upsc-hotspot {
+  background-color: var(--color-upsc-amber) !important;
+  box-shadow: 0 0 10px var(--color-upsc-amber);
+}
+
+.upsc-hotspot.active {
+  background-color: var(--color-white) !important;
+  box-shadow: 0 0 20px var(--color-upsc-amber);
+  transform: scale(1.2);
+}
+
+.upsc-pulse {
+  border: 2px solid var(--color-upsc-amber) !important;
+  box-shadow: 0 0 8px var(--color-upsc-amber);
+}
+
+/* Device Mode Selector Tabs */
+.upsc-control-tabs {
+  display: flex;
+  background-color: rgba(22, 22, 21, 0.6);
+  border: 1px solid rgba(250, 250, 250, 0.04);
+  border-radius: 14px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.upsc-tab-btn {
+  flex: 1;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(250, 250, 250, 0.45);
+  background: none;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-transform: uppercase;
+}
+
+.upsc-tab-btn:hover {
+  color: var(--color-white);
+  background-color: rgba(250, 250, 250, 0.02);
+}
+
+.upsc-tab-btn.active {
+  background-color: var(--color-upsc-amber);
+  color: var(--color-white);
+  box-shadow: 0 5px 15px var(--color-upsc-amber-glow);
+}
+
+/* Details Cards Column styling */
+.upsc-details-card {
+  background: rgba(13, 13, 12, 0.5);
+  border: 1px solid rgba(250, 250, 250, 0.04);
+  border-radius: 20px;
+  padding: 2.2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(250, 250, 250, 0.05);
+}
+
+.upsc-details-card h4 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-white);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.upsc-tag {
+  color: var(--color-upsc-amber) !important;
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+.upsc-metric {
+  background-color: rgba(245, 158, 11, 0.04) !important;
+  border: 1px solid rgba(245, 158, 11, 0.15) !important;
+}
+
+.upsc-metric span:first-child {
+  color: var(--color-upsc-amber) !important;
+}
+
+/* Stepper Component Redesign */
+.upsc-stepper {
+  background: rgba(13, 13, 12, 0.5) !important;
+  border: 1px solid rgba(250, 250, 250, 0.04) !important;
+  border-radius: 24px !important;
+  padding: 3rem !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6) !important;
+}
+
+.upsc-progress-line {
+  background-color: var(--color-upsc-amber) !important;
+  box-shadow: 0 0 10px var(--color-upsc-amber);
+}
+
+.upsc-step-node .step-node-inner {
+  background-color: #121211 !important;
+  border: 3px solid rgba(250, 250, 250, 0.12) !important;
+  color: rgba(250, 250, 250, 0.4) !important;
+}
+
+.upsc-step-node.active .step-node-inner {
+  background-color: var(--color-white) !important;
+  border-color: var(--color-upsc-amber) !important;
+  color: var(--color-upsc-amber) !important;
+  box-shadow: 0 0 20px var(--color-upsc-amber-glow);
+}
+
+.upsc-step-node.completed .step-node-inner {
+  background-color: var(--color-upsc-amber) !important;
+  border-color: var(--color-upsc-amber) !important;
+  color: var(--color-white) !important;
+}
+
+.upsc-step-tag {
+  background-color: rgba(245, 158, 11, 0.05) !important;
+  border: 1px solid rgba(245, 158, 11, 0.15) !important;
+  color: var(--color-upsc-amber) !important;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+}
+
+/* UPSC Key Results Grid Custom Card styling */
+.upsc-results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1.5rem !important;
+}
+
+.upsc-result-stat {
+  background: rgba(13, 13, 12, 0.6);
+  border: 1px solid rgba(250, 250, 250, 0.04);
+  border-radius: 18px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.upsc-result-stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: transparent;
+  transition: background-color 0.4s ease;
+}
+
+.upsc-result-stat:hover {
+  border-color: rgba(245, 158, 11, 0.18);
+  transform: translateY(-4px);
+}
+
+.upsc-result-stat:hover::before {
+  background-color: var(--color-upsc-amber);
+}
+
+.upsc-stat-value {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--color-upsc-amber);
+  letter-spacing: -0.02em;
+}
+
+.upsc-stat-label {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.5);
+  line-height: 1.4;
+}
+
+/* Deep Dive Custom Styling */
+.upsc-features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.upsc-feature-card {
+  border: 1px solid rgba(250, 250, 250, 0.03);
+  background: rgba(13, 13, 12, 0.5);
+  transition: all 0.4s ease;
+}
+
+.upsc-feature-card:hover {
+  border-color: rgba(245, 158, 11, 0.15);
+  transform: translateY(-2px);
+}
+
+.upsc-feature-card h4 {
+  color: var(--color-upsc-amber) !important;
+}
+
+.upsc-acc-highlight {
+  background-color: rgba(245, 158, 11, 0.03) !important;
+  border: 1px solid rgba(245, 158, 11, 0.12) !important;
+}
+
+.upsc-acc-highlight span:first-child {
+  color: var(--color-upsc-amber) !important;
+}
+
+.upsc-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background-color: var(--color-upsc-amber);
+  color: var(--color-white);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 1.1rem 2.2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 25px var(--color-upsc-amber-glow);
+  text-decoration: none;
+  border: 1px solid transparent;
+  margin-top: 1.5rem;
+}
+
+.upsc-cta-btn:hover {
+  background-color: #d97706;
+  box-shadow: 0 15px 35px rgba(217, 119, 6, 0.45);
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 1024px) {
+  .upsc-explorer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .upsc-results-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .upsc-results-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .upsc-stepper {
+    padding: 1.5rem !important;
+  }
+}
