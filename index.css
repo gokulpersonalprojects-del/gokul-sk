@@ -4634,7 +4634,8 @@ body {
   display: block !important;
 }
 
-.explorer-phone-screen-img {
+.explorer-phone-screen-img,
+.crm-screen-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -4763,5 +4764,477 @@ body {
   }
   .accordion-inner {
     padding: 0 1.5rem 1.5rem 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   CENDROL CUSTOM EDITORIAL SPLIT-SCREEN DASHBOARD REDESIGN
+   ========================================================================== */
+.cendrol-dashboard-container {
+  display: grid;
+  grid-template-columns: 410px 1fr;
+  gap: 3.5rem;
+  margin-top: 3.5rem;
+  align-items: start;
+}
+
+.cendrol-dashboard-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: rgba(13, 13, 12, 0.7);
+  border: 1px solid rgba(250, 250, 250, 0.04);
+  border-radius: 24px;
+  padding: 1.8rem;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(250, 250, 250, 0.05);
+}
+
+.cendrol-chapter-tab {
+  background: rgba(250, 250, 250, 0.01);
+  border: 1px solid rgba(250, 250, 250, 0.02);
+  text-align: left;
+  padding: 1.5rem;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.cendrol-chapter-tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 0;
+  background-color: var(--color-red);
+  transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 12px var(--color-red);
+}
+
+.cendrol-chapter-tab:hover {
+  background-color: rgba(250, 250, 250, 0.03);
+  border-color: rgba(250, 250, 250, 0.06);
+  transform: translateX(5px);
+}
+
+.cendrol-chapter-tab.active {
+  background-color: rgba(207, 46, 46, 0.05);
+  border-color: rgba(207, 46, 46, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.cendrol-chapter-tab.active::before {
+  height: 100%;
+}
+
+.cendrol-chapter-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cendrol-chapter-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: rgba(250, 250, 250, 0.35);
+  text-transform: uppercase;
+}
+
+.cendrol-chapter-tab.active .cendrol-chapter-num {
+  color: var(--color-red);
+}
+
+.cendrol-chapter-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(250, 250, 250, 0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cendrol-chapter-tab.active .cendrol-chapter-indicator {
+  background-color: var(--color-red);
+  box-shadow: 0 0 10px var(--color-red);
+  animation: tabPulse 1.5s infinite alternate;
+}
+
+@keyframes tabPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 1; }
+}
+
+.cendrol-chapter-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: rgba(250, 250, 250, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  transition: color 0.4s ease;
+}
+
+.cendrol-chapter-tab.active .cendrol-chapter-title {
+  color: var(--color-white);
+}
+
+.cendrol-chapter-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.4);
+  line-height: 1.6;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.4s;
+}
+
+.cendrol-chapter-tab.active .cendrol-chapter-desc {
+  max-height: 120px;
+  margin-top: 0.4rem;
+  color: rgba(250, 250, 250, 0.55);
+}
+
+/* Right side showcase */
+.cendrol-dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.cendrol-device-frame {
+  background-color: #060606;
+  border: 1px solid rgba(250, 250, 250, 0.08);
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.95), 0 0 50px rgba(207, 46, 46, 0.05);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top-color: rgba(250, 250, 250, 0.15);
+}
+
+/* Redesigned HUD Overlay */
+.cendrol-hud-header {
+  background: rgba(13, 13, 12, 0.95);
+  border-bottom: 1px solid rgba(250, 250, 250, 0.05);
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.cendrol-hud-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  color: var(--color-white);
+}
+
+.cendrol-hud-logo span {
+  color: var(--color-red);
+}
+
+.cendrol-hud-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cendrol-hud-signal {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulseGreen 1.5s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.6; }
+}
+
+.cendrol-hud-status-text {
+  font-family: monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(250, 250, 250, 0.55);
+  text-transform: uppercase;
+}
+
+.cendrol-hud-meta {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: rgba(250, 250, 250, 0.35);
+  letter-spacing: 0.05em;
+}
+
+.cendrol-video-container {
+  position: relative;
+  aspect-ratio: 16/9;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Glossy screen glare effect overlay */
+.cendrol-video-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(250, 250, 250, 0.03) 0%, rgba(250, 250, 250, 0) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.cendrol-device-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Live Analytics HUD Overlay */
+.cendrol-hud-stats-overlay {
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.cendrol-hud-badge {
+  background: rgba(13, 13, 12, 0.85);
+  border: 1px solid rgba(250, 250, 250, 0.08);
+  border-radius: 8px;
+  padding: 0.35rem 0.6rem;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: monospace;
+  font-size: 0.62rem;
+  color: rgba(250, 250, 250, 0.7);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.cendrol-hud-badge span {
+  font-weight: 700;
+}
+
+.cendrol-hud-badge.red-glow span {
+  color: var(--color-red);
+}
+
+.cendrol-hud-badge.green-glow span {
+  color: #10b981;
+}
+
+.cendrol-hud-footer {
+  background: rgba(13, 13, 12, 0.95);
+  border-top: 1px solid rgba(250, 250, 250, 0.05);
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.cendrol-hud-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 1;
+  margin-right: 2rem;
+}
+
+.cendrol-hud-time {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: rgba(250, 250, 250, 0.45);
+}
+
+.cendrol-hud-progress-bar {
+  height: 3px;
+  background-color: rgba(250, 250, 250, 0.1);
+  border-radius: 2px;
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.cendrol-hud-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 65%;
+  background-color: var(--color-red);
+  box-shadow: 0 0 6px var(--color-red);
+  animation: syncProgress 12s infinite linear;
+}
+
+@keyframes syncProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.cendrol-hud-action-tag {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--color-red);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cendrol-hud-action-tag::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-red);
+  border-radius: 50%;
+}
+
+/* Redesigned Context Cards Section */
+.cendrol-context-card {
+  background: linear-gradient(135deg, rgba(22, 22, 21, 0.5) 0%, rgba(13, 13, 12, 0.8) 100%);
+  border: 1px solid rgba(250, 250, 250, 0.05);
+  border-radius: 24px;
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(250, 250, 250, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Futuristic grid texture background overlay */
+.cendrol-context-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(rgba(250, 250, 250, 0.015) 1px, transparent 0);
+  background-size: 16px 16px;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.cendrol-context-quote {
+  font-size: 1.45rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-white);
+  line-height: 1.6;
+  border-left: 3px solid var(--color-red);
+  padding-left: 1.8rem;
+  position: relative;
+  z-index: 2;
+}
+
+.cendrol-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.8rem;
+  position: relative;
+  z-index: 2;
+}
+
+.cendrol-info-card {
+  background: rgba(13, 13, 12, 0.6);
+  border: 1px solid rgba(250, 250, 250, 0.04);
+  border-radius: 18px;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+  overflow: hidden;
+}
+
+.cendrol-info-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, transparent 49%, rgba(207, 46, 46, 0.08) 50%);
+  pointer-events: none;
+}
+
+.cendrol-info-card:hover {
+  border-color: rgba(207, 46, 46, 0.15);
+  transform: translateY(-4px);
+}
+
+.cendrol-info-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(250, 250, 250, 0.04);
+  padding-bottom: 0.6rem;
+}
+
+.cendrol-info-card h5 {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: var(--color-red);
+  text-transform: uppercase;
+}
+
+.cendrol-info-card-badge {
+  font-family: monospace;
+  font-size: 0.58rem;
+  background: rgba(250, 250, 250, 0.03);
+  border: 1px solid rgba(250, 250, 250, 0.08);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  color: rgba(250, 250, 250, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cendrol-info-card p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.55);
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 1024px) {
+  .cendrol-dashboard-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
 }

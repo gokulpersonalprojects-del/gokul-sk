@@ -63,45 +63,59 @@ const initInteractionEngine = () => {
     document.fonts.ready.then(forceSvgRepaint);
   }
 
-  // --- HERO VIDEO PERMISSION FAIL-SAFE ---
+  // --- HERO VIDEO CASCADING FAIL-SAFE ---
   const heroVideo = document.querySelector('.video-banner');
   if (heroVideo) {
-    const primaryUrl = "hero_video.mp4";
+    const localUrl = "hero_video.mp4";
+    const primaryUrl = "https://drive.google.com/uc?export=download&id=1PY6KlNwTg3JH1Zt_ctXu9yYgknmMiNqJ";
     const fallbackUrl = "https://impactbbdo.com/wp-content/uploads/2025/06/Intro-Video_1440x734_CLEAN_NO-LOGO.mp4";
     
-    const triggerFallback = () => {
-      const currentSrc = heroVideo.currentSrc || heroVideo.getAttribute('src') || '';
-      if (!currentSrc.includes('hero_video') && currentSrc !== fallbackUrl) {
+    let currentSourceIndex = 0; // 0: localUrl, 1: primaryUrl, 2: fallbackUrl
+    const sourcesList = [localUrl, primaryUrl, fallbackUrl];
+
+    const loadNextSource = () => {
+      currentSourceIndex++;
+      if (currentSourceIndex < sourcesList.length) {
+        const nextUrl = sourcesList[currentSourceIndex];
+        console.log(`Hero video source failed. Falling back to: ${nextUrl}`);
+        
         heroVideo.removeAttribute('src');
-        // Clear all child sources if any exist
         const sources = heroVideo.querySelectorAll('source');
         sources.forEach(source => source.parentNode.removeChild(source));
         
-        heroVideo.setAttribute('src', fallbackUrl);
+        heroVideo.setAttribute('src', nextUrl);
         heroVideo.load();
         heroVideo.play().catch(() => {});
+        resetTimer();
       }
     };
 
-    // Listen for source loading errors (capturing phase is required for source elements)
-    heroVideo.addEventListener('error', triggerFallback, true);
-
-    // Immediate fallback trigger if error state is already resolved prior to script load
-    if (heroVideo.error || heroVideo.networkState === 4) {
-      triggerFallback();
-    }
-
-    // Bulletproof backup timer: if video metadata doesn't load in 2.5 seconds, trigger fallback
-    const fallbackTimeout = setTimeout(() => {
-      if (heroVideo.readyState < 1) { // HAVE_NOTHING
-        triggerFallback();
+    // Listen for error loading local/network files
+    heroVideo.addEventListener('error', (e) => {
+      if (currentSourceIndex < sourcesList.length - 1) {
+        loadNextSource();
       }
-    }, 2500);
+    }, true);
+
+    // Bulletproof backup timer: if video metadata doesn't load in 4 seconds, try next source
+    let fallbackTimeout = null;
+    const resetTimer = () => {
+      if (fallbackTimeout) clearTimeout(fallbackTimeout);
+      fallbackTimeout = setTimeout(() => {
+        if (heroVideo.readyState < 1 && currentSourceIndex < sourcesList.length - 1) { // HAVE_NOTHING
+          loadNextSource();
+        }
+      }, 4000);
+    };
 
     heroVideo.addEventListener('loadedmetadata', () => {
-      clearTimeout(fallbackTimeout);
+      if (fallbackTimeout) clearTimeout(fallbackTimeout);
     });
+
+    // Start initial backup timer
+    resetTimer();
   }
+
 
   // --- PILL VIDEOS FAIL-SAFE ---
   const pillPills = document.querySelectorAll('.video-badge-pill');
@@ -779,12 +793,12 @@ const initInteractionEngine = () => {
       });
     });
 
-    // B. Hotspot Device Explorer Logic
+    // B. Hotspot Device Explorer Logic (Scoped & Conflict-Free)
     const hotspots = document.querySelectorAll('.hotspot-dot');
     const detailCards = document.querySelectorAll('.hotspot-details-card');
     const explorerScreenImg = document.querySelector('.explorer-phone-screen-img');
 
-    // Hotspot ID to high-fidelity design screen mapping
+    // Hotspot ID to high-fidelity design screen mapping (Netflix)
     const screenMapping = {
       '1': 'netflix_screen_1.png', // Stranger Things video player view
       '2': 'netflix_screen_3.png', // Shoppable drawer open showing Max's Retro Jacket
@@ -795,26 +809,31 @@ const initInteractionEngine = () => {
     hotspots.forEach(dot => {
       dot.addEventListener('click', () => {
         const hotspotId = dot.getAttribute('data-hotspot');
+        const parentSection = dot.closest('.case-study-section');
+        if (!parentSection) return;
         
-        // Active dot class toggle
-        hotspots.forEach(h => h.classList.remove('active'));
+        // Toggle active hotspot inside this case study container only
+        const localHotspots = parentSection.querySelectorAll('.hotspot-dot');
+        localHotspots.forEach(h => h.classList.remove('active'));
         dot.classList.add('active');
 
-        // Swap the background design screen of the phone mockup
-        if (explorerScreenImg && screenMapping[hotspotId]) {
-          explorerScreenImg.setAttribute('src', screenMapping[hotspotId]);
+        // Netflix image switching
+        const localImg = parentSection.querySelector('.explorer-phone-screen-img');
+        if (localImg && screenMapping[hotspotId]) {
+          localImg.setAttribute('src', screenMapping[hotspotId]);
           
           // GSAP fade-in effect on screen swap for a smooth micro-animation
           if (typeof gsap !== 'undefined') {
-            gsap.fromTo(explorerScreenImg,
+            gsap.fromTo(localImg,
               { opacity: 0.8 },
               { opacity: 1, duration: 0.4, ease: "power2.out" }
             );
           }
         }
 
-        // Detail card swap animation
-        detailCards.forEach(card => {
+        // Toggle active details card inside this case study container only
+        const localCards = parentSection.querySelectorAll('.hotspot-details-card');
+        localCards.forEach(card => {
           card.classList.remove('active');
           if (card.getAttribute('data-card') === hotspotId) {
             card.classList.add('active');
@@ -830,21 +849,25 @@ const initInteractionEngine = () => {
       });
     });
 
-    // B.1 Live Figma Toggle Logic
-    const devicePhoneShell = document.querySelector('.device-phone-shell');
+    // B.1 Live Figma Toggle Logic (Scoped & Conflict-Free)
     const deviceTabButtons = document.querySelectorAll('.device-tab-btn');
-    const explorerContent = document.querySelector('.device-explorer-content');
-    const figmaPane = document.querySelector('.device-figma-pane');
-    const figmaIframe = document.querySelector('.device-figma-iframe');
-    const figmaLoading = document.querySelector('.figma-loading-overlay');
-    const figmaUrl = "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FvQCGfU9G9ETS97J9UpUUIb%2FDesign-Challenge_1%3Fpage-id%3D273%253A2118%26type%3Ddesign%26node-id%3D273-3120%26viewport%3D1461%252C278%252C0.18%26t%3Dx5CiHHv1QnEC62T8-1%26scaling%3Dscale-down%26starting-point-node-id%3D273%253A2151%26mode%3Ddesign&hide-ui=1";
+    const netflixFigmaUrl = "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FvQCGfU9G9ETS97J9UpUUIb%2FDesign-Challenge_1%3Fpage-id%3D273%253A2118%26type%3Ddesign%26node-id%3D273-3120%26viewport%3D1461%252C278%252C0.18%26t%3Dx5CiHHv1QnEC62T8-1%26scaling%3Dscale-down%26starting-point-node-id%3D273%253A2151%26mode%3Ddesign&hide-ui=1";
 
     deviceTabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.getAttribute('data-device-tab');
-        
-        deviceTabButtons.forEach(b => b.classList.remove('active'));
+        const parentSection = btn.closest('.case-study-section');
+        if (!parentSection) return;
+
+        const localTabButtons = parentSection.querySelectorAll('.device-tab-btn');
+        localTabButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+
+        const devicePhoneShell = parentSection.querySelector('.device-phone-shell');
+        const explorerContent = parentSection.querySelector('.device-explorer-content');
+        const figmaPane = parentSection.querySelector('.device-figma-pane');
+        const figmaIframe = parentSection.querySelector('.device-figma-iframe');
+        const figmaLoading = parentSection.querySelector('.figma-loading-overlay');
 
         if (tab === 'figma') {
           if (devicePhoneShell) devicePhoneShell.classList.add('figma-active');
@@ -852,8 +875,7 @@ const initInteractionEngine = () => {
           if (figmaPane) figmaPane.classList.add('active');
 
           if (figmaIframe && !figmaIframe.getAttribute('src')) {
-            figmaIframe.setAttribute('src', figmaUrl);
-            
+            figmaIframe.setAttribute('src', netflixFigmaUrl);
             figmaIframe.addEventListener('load', () => {
               if (figmaLoading) figmaLoading.classList.add('loaded');
             });
@@ -866,18 +888,21 @@ const initInteractionEngine = () => {
       });
     });
 
-    // C. A/B Testing Card Switcher Logic
+    // C. A/B Testing Card Switcher Logic (Scoped & Conflict-Free)
     const abButtons = document.querySelectorAll('.ab-toggle-btn');
-    const abCards = document.querySelectorAll('.ab-comparison-card');
 
     abButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const abTarget = btn.getAttribute('data-ab');
-        
-        abButtons.forEach(b => b.classList.remove('active'));
+        const parentSection = btn.closest('.case-study-section');
+        if (!parentSection) return;
+
+        const localAbButtons = parentSection.querySelectorAll('.ab-toggle-btn');
+        localAbButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        abCards.forEach(card => {
+        const localCards = parentSection.querySelectorAll('.ab-comparison-card');
+        localCards.forEach(card => {
           card.classList.remove('active');
           if (card.id === `ab-card-${abTarget}`) {
             card.classList.add('active');
@@ -893,40 +918,47 @@ const initInteractionEngine = () => {
       });
     });
 
-    // D. 3-Step Purchase Stepper Logic
+    // D. Process Stepper Logic (Scoped & Conflict-Free)
     const stepNodes = document.querySelectorAll('.step-node');
-    const stepCards = document.querySelectorAll('.step-display-card');
-    const timelineProgress = document.querySelector('.stepper-line-progress');
 
-    const updateTimelineProgress = (stepIndex) => {
-      if (timelineProgress) {
-        // Calculate progress percentage based on step index (1: 0%, 2: 50%, 3: 100%)
-        const percentage = ((stepIndex - 1) / (stepNodes.length - 1)) * 100;
-        timelineProgress.style.width = `${percentage}%`;
-      }
-    };
-
-    stepNodes.forEach((node, idx) => {
+    stepNodes.forEach((node) => {
       node.addEventListener('click', () => {
-        const stepNum = parseInt(node.getAttribute('data-step'));
-        
+        const stepValue = node.getAttribute('data-step');
+        const parentStepper = node.closest('.stepper-widget');
+        if (!parentStepper) return;
+
+        const localNodes = parentStepper.querySelectorAll('.step-node');
+        const localCards = parentStepper.querySelectorAll('.step-display-card');
+        const localProgress = parentStepper.querySelector('.stepper-line-progress');
+
+        // Find current step index (1-based)
+        let activeIdx = 1;
+        localNodes.forEach((n, idx) => {
+          if (n === node) {
+            activeIdx = idx + 1;
+          }
+        });
+
         // Update nodes classes
-        stepNodes.forEach((n, nIdx) => {
+        localNodes.forEach((n, idx) => {
           n.classList.remove('active', 'completed');
-          if (nIdx + 1 < stepNum) {
+          if (idx + 1 < activeIdx) {
             n.classList.add('completed');
-          } else if (nIdx + 1 === stepNum) {
+          } else if (idx + 1 === activeIdx) {
             n.classList.add('active');
           }
         });
 
-        // Update progress bar
-        updateTimelineProgress(stepNum);
+        // Update timeline progress bar width
+        if (localProgress && localNodes.length > 1) {
+          const percentage = ((activeIdx - 1) / (localNodes.length - 1)) * 100;
+          localProgress.style.width = `${percentage}%`;
+        }
 
-        // Update step display details
-        stepCards.forEach(card => {
+        // Swap display cards
+        localCards.forEach(card => {
           card.classList.remove('active');
-          if (parseInt(card.getAttribute('data-step-card')) === stepNum) {
+          if (card.getAttribute('data-step-card') === stepValue) {
             card.classList.add('active');
             
             if (typeof gsap !== 'undefined') {
@@ -988,6 +1020,175 @@ const initInteractionEngine = () => {
   // Initialize immediately on load/render
   handleScrollEffects();
   initNetflixCaseStudy();
+
+  // ==========================================================================
+  // 9. INTERACTIVE CENDROL CASE STUDY EXPLORER SYSTEM
+  // ==========================================================================
+  const initCendrolCaseStudy = () => {
+
+    // A. CRM Mode Switcher (Tour ↔ Deep Dive)
+    const crmModeSwitcher = document.getElementById('crm-mode-switcher');
+    if (!crmModeSwitcher) return; // CRM section not present
+
+    const crmModeButtons = crmModeSwitcher.querySelectorAll('.case-mode-btn');
+    const crmSwitcherSlider = crmModeSwitcher.querySelector('.switcher-bg-slider');
+    const crmTourPane = document.getElementById('crm-pane-tour');
+    const crmDeepPane = document.getElementById('crm-pane-deep');
+
+    const updateCRMSlider = (activeBtn) => {
+      if (crmSwitcherSlider && activeBtn) {
+        crmSwitcherSlider.style.width = `${activeBtn.offsetWidth}px`;
+        crmSwitcherSlider.style.left = `${activeBtn.offsetLeft}px`;
+      }
+    };
+
+    const activeCRMBtn = crmModeSwitcher.querySelector('.case-mode-btn.active');
+    if (activeCRMBtn) setTimeout(() => updateCRMSlider(activeCRMBtn), 300);
+
+    crmModeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.getAttribute('data-mode');
+        crmModeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateCRMSlider(btn);
+
+        const showPane = mode === 'tour' ? crmTourPane : crmDeepPane;
+        const hidePane = mode === 'tour' ? crmDeepPane : crmTourPane;
+
+        if (hidePane) hidePane.classList.remove('active');
+        if (showPane) {
+          showPane.classList.add('active');
+          if (typeof gsap !== 'undefined') {
+            gsap.fromTo(showPane, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+          }
+        }
+
+        if (typeof ScrollTrigger !== 'undefined') {
+          setTimeout(() => ScrollTrigger.refresh(), 200);
+        }
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      const activeBtn = crmModeSwitcher.querySelector('.case-mode-btn.active');
+      if (activeBtn) updateCRMSlider(activeBtn);
+    });
+
+    // B. Cendrol Split-Screen Chapters Dashboard Tab Click Logic
+    const chapterTabs = document.querySelectorAll('.cendrol-chapter-tab');
+    const dashboardVideo = document.getElementById('cendrol-dashboard-video');
+    const dashboardQuote = document.getElementById('cendrol-dashboard-quote');
+    const dashboardChallenge = document.getElementById('cendrol-dashboard-challenge');
+    const dashboardSolution = document.getElementById('cendrol-dashboard-solution');
+    const dashboardWorkstream = document.getElementById('cendrol-hud-workstream-val');
+
+    const cendrolChapterData = {
+      '1': {
+        video: 'https://framerusercontent.com/assets/mYPTiswtqcC9hDxMgdbGcpoWVT8.mp4',
+        workstream: '01_SUBMISSIONS',
+        quote: '"Engineers were less concerned about submitting expenses and more concerned about tracking approvals."',
+        challenge: 'Reducing receipt logging fields to capture receipts and parameters under 10 seconds in active construction zones.',
+        solution: 'Designed a rapid 10-second mobile photo flow that automatically pre-fills parameters and minimizes active input.'
+      },
+      '2': {
+        video: 'https://framerusercontent.com/assets/TZ7ytTpVPqZXYUNLzkUDLc53Lo.mp4',
+        workstream: '02_ADMIN_CONTROL',
+        quote: '"The administrative teams was swamped by manual filtering and verification layouts, which delayed claims."',
+        challenge: 'Sorting, filtering, and cross-checking dozens of manual receipts against active site schedules manually.',
+        solution: 'Built a unified CFO admin dashboard featuring rapid search, multi-claim filtering, and direct approval triggers.'
+      },
+      '3': {
+        video: 'https://framerusercontent.com/assets/uprluZWUo2fOOM7JyDmVgfNyII.mp4',
+        workstream: '03_PAYOUT_STATES',
+        quote: '"Every payout delay created real mental stress for engineers who had spent out-of-pocket for site services."',
+        challenge: 'Engineers had zero visibility into where their submitted expenses stood, causing severe friction.',
+        solution: 'Introduced automatic real-time status trackers and progress updates that engineers can query instantly.'
+      },
+      '4': {
+        video: 'https://framerusercontent.com/assets/p4j0AqBiupO0NvSzNiUmIDiyMM.mp4',
+        workstream: '04_PROGRESSION',
+        quote: '"By defining clear status progression stages, we eliminated bottleneck stages entirely."',
+        challenge: 'Stages in the old B2B CRM felt disconnected and lacked visual progression cues for active operations.',
+        solution: 'Mapped reimbursement phases onto a clear, linear timeline highlighting active bottlenecks and next steps.'
+      },
+      '5': {
+        video: 'https://framerusercontent.com/assets/P9LeKh4t0jWLrI4VLc1lNFz1o.mp4',
+        workstream: '05_REFLECTIONS',
+        quote: '"The redesign was about taking a fragmented process and making it clear, legible, and structured."',
+        challenge: 'Ensuring on-site teams actually adopted the B2B tracker without feeling it was administrative busywork.',
+        solution: 'Empowered site teams with supportive expense tools, leading to a 79% adoption rate within weeks.'
+      }
+    };
+
+    const swapText = (element, newText) => {
+      if (!element) return;
+      if (typeof gsap !== 'undefined') {
+        gsap.to(element, {
+          opacity: 0,
+          y: -5,
+          duration: 0.2,
+          onComplete: () => {
+            element.innerHTML = newText;
+            gsap.fromTo(element, 
+              { opacity: 0, y: 5 },
+              { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }
+            );
+          }
+        });
+      } else {
+        element.innerHTML = newText;
+      }
+    };
+
+    chapterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const chapter = tab.getAttribute('data-chapter');
+        if (!chapter || !cendrolChapterData[chapter]) return;
+
+        // Toggle active tab classes
+        chapterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const data = cendrolChapterData[chapter];
+
+        // 1. Swap video with premium fade out/in animation
+        if (dashboardVideo) {
+          if (typeof gsap !== 'undefined') {
+            gsap.to(dashboardVideo, {
+              opacity: 0,
+              duration: 0.25,
+              onComplete: () => {
+                dashboardVideo.setAttribute('src', data.video);
+                dashboardVideo.load();
+                dashboardVideo.play().catch(() => {});
+                gsap.to(dashboardVideo, { opacity: 1, duration: 0.35 });
+              }
+            });
+          } else {
+            dashboardVideo.setAttribute('src', data.video);
+            dashboardVideo.load();
+            dashboardVideo.play().catch(() => {});
+          }
+        }
+
+        // 2. Swap text details using custom micro-animation
+        swapText(dashboardQuote, data.quote);
+        swapText(dashboardChallenge, data.challenge);
+        swapText(dashboardSolution, data.solution);
+
+        if (dashboardWorkstream) {
+          dashboardWorkstream.textContent = data.workstream;
+        }
+
+        // 3. Recalculate GSAP ScrollTrigger since content height or state updated
+        if (typeof ScrollTrigger !== 'undefined') {
+          setTimeout(() => ScrollTrigger.refresh(), 500);
+        }
+      });
+    });
+  };
+
+  initCendrolCaseStudy();
 };
 
 
