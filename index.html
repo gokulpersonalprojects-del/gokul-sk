@@ -1794,110 +1794,108 @@
               </div>
             </div>
 
-            <!-- Widget 1: Interactive Phone Explorer -->
+            <!-- Widget 1: UPSC Companion Interactive Tour -->
             <div class="widget-section fade-up">
               <div class="widget-header">
-                <h3>01 / SCREEN EXPLORER</h3>
-                <p>Tap a hotspot to explore the key screens of the UPSC Companion experience.</p>
+                <h3>01 / SYLLABUS MIND-MAP & AI SIMULATOR</h3>
+                <p>Select a glowing syllabus subject node on the left to simulate Yooki's conversational tutoring and cognitive guidance layer.</p>
               </div>
 
-              <div class="hotspot-explorer-grid upsc-explorer-grid">
-                <!-- Device Column -->
-                <div class="explorer-device-col">
-                  <!-- Live Demo vs Hotspot Switcher Tabs -->
-                  <div class="upsc-control-tabs">
-                    <button class="upsc-tab-btn active" data-upsc-tab="explorer">📱 Screen Explorer</button>
-                    <button class="upsc-tab-btn" data-upsc-tab="demo">🎬 AI Syllabus Demo</button>
+              <div class="yooki-simulator-container">
+                <!-- Left Side: Mind-map Workspace -->
+                <div class="yooki-mindmap-workspace">
+                  <!-- Node 1: Polity -->
+                  <button class="yooki-subject-node active" data-yooki-node="polity">
+                    <div class="yooki-node-info">
+                      <span class="yooki-node-tag">GS PAPER II</span>
+                      <span class="yooki-node-name">Indian Polity</span>
+                    </div>
+                    <div class="yooki-node-progress">
+                      <span class="yooki-progress-num">84%</span>
+                      <span class="yooki-progress-label">Mastery</span>
+                    </div>
+                  </button>
+
+                  <!-- Node 2: Economy -->
+                  <button class="yooki-subject-node" data-yooki-node="economy">
+                    <div class="yooki-node-info">
+                      <span class="yooki-node-tag">GS PAPER III</span>
+                      <span class="yooki-node-name">Economic Dev</span>
+                    </div>
+                    <div class="yooki-node-progress">
+                      <span class="yooki-progress-num">62%</span>
+                      <span class="yooki-progress-label">Mastery</span>
+                    </div>
+                  </button>
+
+                  <!-- Node 3: Environment -->
+                  <button class="yooki-subject-node" data-yooki-node="environment">
+                    <div class="yooki-node-info">
+                      <span class="yooki-node-tag">GS PAPER III</span>
+                      <span class="yooki-node-name">Environment</span>
+                    </div>
+                    <div class="yooki-node-progress">
+                      <span class="yooki-progress-num">41%</span>
+                      <span class="yooki-progress-label">Mastery</span>
+                    </div>
+                  </button>
+
+                  <!-- Node 4: History -->
+                  <button class="yooki-subject-node" data-yooki-node="history">
+                    <div class="yooki-node-info">
+                      <span class="yooki-node-tag">GS PAPER I</span>
+                      <span class="yooki-node-name">Modern History</span>
+                    </div>
+                    <div class="yooki-node-progress">
+                      <span class="yooki-progress-num">78%</span>
+                      <span class="yooki-progress-label">Mastery</span>
+                    </div>
+                  </button>
+
+                  <!-- Node 5: Current Affairs -->
+                  <button class="yooki-subject-node" data-yooki-node="current">
+                    <div class="yooki-node-info">
+                      <span class="yooki-node-tag">INTEGRATED</span>
+                      <span class="yooki-node-name">Current Affairs</span>
+                    </div>
+                    <div class="yooki-node-progress">
+                      <span class="yooki-progress-num">95%</span>
+                      <span class="yooki-progress-label">Mastery</span>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Right Side: Chat Terminal -->
+                <div class="yooki-chat-terminal">
+                  <div class="yooki-chat-header">
+                    <span class="yooki-chat-title" id="yooki-chat-title-text">Polity AI Assistant</span>
+                    <span class="yooki-chat-status">ONLINE · READY</span>
                   </div>
-                  
-                  <div class="device-phone-shell upsc-phone-shell">
-                    <div class="device-notch"></div>
-                    <div class="device-screen-screen">
-                      <!-- Hotspot Explorer Content -->
-                      <div class="device-explorer-content active" id="upsc-explorer-content">
-                        <!-- UPSC High Fidelity Screen Image (swapped dynamically via JS) -->
-                        <img class="upsc-explorer-screen-img explorer-phone-screen-img" src="https://framerusercontent.com/images/BlHKUcKAhGRXRgmgmPvNd4QN0.png" alt="UPSC Companion Screen">
-
-                        <!-- Hotspot 1: Home Dashboard -->
-                        <div class="hotspot-dot upsc-hotspot active" data-upsc-hotspot="1" style="top: 40px; left: 30px;" title="Home Dashboard">
-                          <div class="hotspot-pulse upsc-pulse"></div>
-                        </div>
-
-                        <!-- Hotspot 2: AI Study Planner -->
-                        <div class="hotspot-dot upsc-hotspot" data-upsc-hotspot="2" style="top: 130px; right: 30px;" title="AI Study Planner">
-                          <div class="hotspot-pulse upsc-pulse"></div>
-                        </div>
-
-                        <!-- Hotspot 3: Topic Deep Dive -->
-                        <div class="hotspot-dot upsc-hotspot" data-upsc-hotspot="3" style="bottom: 110px; left: 40px;" title="Topic Deep Dive">
-                          <div class="hotspot-pulse upsc-pulse"></div>
-                        </div>
-
-                        <!-- Hotspot 4: Progress Analytics -->
-                        <div class="hotspot-dot upsc-hotspot" data-upsc-hotspot="4" style="bottom: 40px; right: 30px;" title="Progress Analytics">
-                          <div class="hotspot-pulse upsc-pulse"></div>
-                        </div>
-                      </div>
-                      
-                      <!-- Video Demo Pane -->
-                      <div class="upsc-video-pane" id="upsc-video-pane">
-                        <video class="upsc-device-video" id="upsc-demo-video" loop muted playsinline src="https://framerusercontent.com/assets/QpMTNHuoGlxDpUNZ26Azy3J2OV8.mp4"></video>
-                      </div>
+                  <div class="yooki-chat-body" id="yooki-chat-stream">
+                    <!-- Bubbles dynamically managed by JS -->
+                    <div class="yooki-chat-bubble aspirant">
+                      <span class="yooki-bubble-sender">ASPIRANT</span>
+                      <div class="yooki-bubble-text">How should I approach Panchayati Raj amendments for GS Paper II?</div>
+                    </div>
+                    <div class="yooki-chat-bubble ai">
+                      <span class="yooki-bubble-sender">YOOKI AI</span>
+                      <div class="yooki-bubble-text yooki-typewriter-cursor" id="yooki-active-typewriter">Focus on the 73rd and 74th Amendments. Combine this with the dynamic link to Federalism under Economy. Make sure to cross-reference Fiscal Devolution patterns from the 15th Finance Commission. This covers approx 12-15 marks annually.</div>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <!-- Details Card Column -->
-                <div class="explorer-details-col">
-                  <div class="hotspot-details-card upsc-details-card active" data-upsc-card="default">
-                    <h4>Yooki Smart Study System</h4>
-                    <p class="highlight-tag upsc-tag">SELECT A GLOWING NODE TO START</p>
-                    <p>The UPSC exam covers 13+ papers across General Studies, Optional subjects, Essay, and Personality tests. Traditional prep leaves aspirants overwhelmed. We designed a layered system that personalizes the journey — from daily study targets to topic mastery tracking.</p>
-                    <ul class="spec-list">
-                      <li><span>AI-Personalized</span> Daily study targets adapt to progress</li>
-                      <li><span>Structured Syllabus</span> 13 papers mapped into trackable modules</li>
-                      <li><span>Smart Revision</span> Spaced repetition for long-term retention</li>
-                    </ul>
+              <!-- Insight Stats Grid at the bottom of the section -->
+              <div class="yooki-insight-panel">
+                <div class="yooki-insight-header">YOOKI PREPARATION COGNITIVE LAYER INSIGHTS</div>
+                <div class="yooki-insight-grid">
+                  <div class="yooki-insight-box recommendation">
+                    <h5>AI RECOMMENDATION</h5>
+                    <p id="yooki-insight-rec">Subject overlap detected: Link <span>Polity (Panchayati Raj)</span> with <span>Economy (Fiscal Devolution)</span> to solve 3 PYQs from last 5 years.</p>
                   </div>
-
-                  <div class="hotspot-details-card upsc-details-card" data-upsc-card="1">
-                    <h4>01 / Home Dashboard</h4>
-                    <p class="highlight-tag upsc-tag">DAILY STUDY PULSE</p>
-                    <p>The dashboard shows today's personalized study plan, streak tracker, upcoming revision topics, and a daily current affairs digest. Designed to give aspirants clarity within 3 seconds of opening the app.</p>
-                    <div class="metric-mini-row">
-                      <div class="metric-mini upsc-metric"><span>3s</span><span>Time to Daily Plan</span></div>
-                      <div class="metric-mini upsc-metric"><span>+72%</span><span>Daily Retention Rate</span></div>
-                    </div>
-                  </div>
-
-                  <div class="hotspot-details-card upsc-details-card" data-upsc-card="2">
-                    <h4>02 / AI Study Planner</h4>
-                    <p class="highlight-tag upsc-tag">PERSONALIZED LEARNING PATHS</p>
-                    <p>The AI planner analyses past performance, weak topic clusters, and exam timeline proximity to generate a dynamic weekly study schedule. It redistributes effort towards critical low-confidence areas automatically.</p>
-                    <div class="metric-mini-row">
-                      <div class="metric-mini upsc-metric"><span>87%</span><span>Plan Accuracy Score</span></div>
-                      <div class="metric-mini upsc-metric"><span>Auto</span><span>Weak Topic Boost</span></div>
-                    </div>
-                  </div>
-
-                  <div class="hotspot-details-card upsc-details-card" data-upsc-card="3">
-                    <h4>03 / Topic Deep Dive</h4>
-                    <p class="highlight-tag upsc-tag">LAYERED SYLLABUS MASTERY</p>
-                    <p>Each topic unfolds into scannable study cards, mind maps, previous year question patterns, and a 3-tier comprehension tracker (Aware → Understood → Mastered). Content auto-shortens for quick revision mode.</p>
-                    <div class="metric-mini-row">
-                      <div class="metric-mini upsc-metric"><span>3-Tier</span><span>Mastery System</span></div>
-                      <div class="metric-mini upsc-metric"><span>-45%</span><span>Topic Confusion Rate</span></div>
-                    </div>
-                  </div>
-
-                  <div class="hotspot-details-card upsc-details-card" data-upsc-card="4">
-                    <h4>04 / Progress Analytics</h4>
-                    <p class="highlight-tag upsc-tag">REAL-TIME PERFORMANCE TRACKING</p>
-                    <p>A detailed analytics dashboard showing syllabus completion %, test scores trend, category-wise strength matrix, and mock test performance benchmarked against peer cohorts. Helps aspirants course-correct weekly.</p>
-                    <div class="metric-mini-row">
-                      <div class="metric-mini upsc-metric"><span>360°</span><span>Performance View</span></div>
-                      <div class="metric-mini upsc-metric"><span>+91%</span><span>Confident Decision Making</span></div>
-                    </div>
+                  <div class="yooki-insight-box alert">
+                    <h5>PREPARATION ALERT</h5>
+                    <p id="yooki-insight-alert"><span>Good Progress:</span> You scored 82% in yesterday's Polity daily quiz. Keep up the consistency.</p>
                   </div>
                 </div>
               </div>

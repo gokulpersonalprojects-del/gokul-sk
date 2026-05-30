@@ -5628,3 +5628,371 @@ body {
     padding: 1.5rem !important;
   }
 }
+
+/* ==========================================================================
+   YOOKI UPSC AI CONVERSATIONAL SYLLABUS SIMULATOR STYLING
+   ========================================================================== */
+.yooki-simulator-container {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  margin-top: 3.5rem;
+  align-items: start;
+}
+
+/* Left Side Mind-Map grid */
+.yooki-mindmap-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: rgba(13, 13, 12, 0.7);
+  border: 1px solid rgba(250, 250, 250, 0.04);
+  border-radius: 24px;
+  padding: 2.2rem;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(250, 250, 250, 0.05);
+}
+
+.yooki-subject-node {
+  background: rgba(250, 250, 250, 0.01);
+  border: 1px solid rgba(250, 250, 250, 0.03);
+  text-align: left;
+  padding: 1.5rem;
+  border-radius: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.yooki-subject-node::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 0;
+  background-color: var(--color-upsc-amber);
+  transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 12px var(--color-upsc-amber);
+}
+
+.yooki-subject-node:hover {
+  background-color: rgba(250, 250, 250, 0.02);
+  border-color: rgba(250, 250, 250, 0.06);
+  transform: translateX(6px);
+}
+
+.yooki-subject-node.active {
+  background-color: rgba(245, 158, 11, 0.03);
+  border-color: rgba(245, 158, 11, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.yooki-subject-node.active::before {
+  height: 100%;
+}
+
+.yooki-node-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.yooki-node-tag {
+  font-family: monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(250, 250, 250, 0.35);
+  text-transform: uppercase;
+}
+
+.yooki-subject-node.active .yooki-node-tag {
+  color: var(--color-upsc-amber);
+}
+
+.yooki-node-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: rgba(250, 250, 250, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  transition: color 0.4s ease;
+}
+
+.yooki-subject-node.active .yooki-node-name {
+  color: var(--color-white);
+}
+
+/* Monospace progress circles */
+.yooki-node-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.yooki-progress-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--color-upsc-amber);
+}
+
+.yooki-progress-label {
+  font-family: monospace;
+  font-size: 0.58rem;
+  color: rgba(250, 250, 250, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Right Side: Chat HUD Simulator */
+.yooki-chat-terminal {
+  background: linear-gradient(135deg, rgba(22, 22, 21, 0.5) 0%, rgba(13, 13, 12, 0.8) 100%);
+  border: 1px solid rgba(250, 250, 250, 0.05);
+  border-radius: 28px;
+  padding: 2.2rem;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(250, 250, 250, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  height: 480px;
+  box-sizing: border-box;
+}
+
+.yooki-chat-header {
+  border-bottom: 1px solid rgba(250, 250, 250, 0.04);
+  padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.yooki-chat-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--color-white);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.yooki-chat-title::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-upsc-amber);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-upsc-amber);
+  animation: tabPulse 1.5s infinite alternate;
+}
+
+.yooki-chat-status {
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: rgba(250, 250, 250, 0.4);
+}
+
+/* Chat bubble body stream */
+.yooki-chat-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Styles for scrollbar inside chat stream */
+.yooki-chat-body::-webkit-scrollbar {
+  width: 4px;
+}
+.yooki-chat-body::-webkit-scrollbar-thumb {
+  background-color: rgba(250, 250, 250, 0.05);
+  border-radius: 2px;
+}
+
+.yooki-chat-bubble {
+  max-width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  animation: bubbleReveal 0.4s ease forwards;
+}
+
+@keyframes bubbleReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.yooki-chat-bubble.aspirant {
+  align-self: flex-end;
+}
+
+.yooki-chat-bubble.ai {
+  align-self: flex-start;
+}
+
+.yooki-bubble-sender {
+  font-family: monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: rgba(250, 250, 250, 0.35);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.yooki-chat-bubble.aspirant .yooki-bubble-sender {
+  text-align: right;
+}
+
+.yooki-bubble-text {
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.5;
+  padding: 1.1rem 1.4rem;
+  border-radius: 18px;
+}
+
+.yooki-chat-bubble.aspirant .yooki-bubble-text {
+  background-color: rgba(250, 250, 250, 0.04);
+  border: 1px solid rgba(250, 250, 250, 0.05);
+  color: rgba(250, 250, 250, 0.85);
+  border-bottom-right-radius: 2px;
+}
+
+.yooki-chat-bubble.ai .yooki-bubble-text {
+  background-color: rgba(245, 158, 11, 0.03);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  color: var(--color-white);
+  border-bottom-left-radius: 2px;
+  position: relative;
+}
+
+/* Monospace Blinking Typewriter Cursor */
+.yooki-typewriter-cursor::after {
+  content: '|';
+  color: var(--color-upsc-amber);
+  animation: blinkCursor 0.8s infinite;
+  font-weight: 900;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Insight Summary Stats Panel */
+.yooki-insight-panel {
+  background: rgba(13, 13, 12, 0.7);
+  border: 1px solid rgba(250, 250, 250, 0.04);
+  border-radius: 24px;
+  padding: 2.2rem;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(250, 250, 250, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.yooki-insight-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(rgba(250, 250, 250, 0.01) 1px, transparent 0);
+  background-size: 16px 16px;
+  pointer-events: none;
+}
+
+.yooki-insight-header {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: var(--color-upsc-amber);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(250, 250, 250, 0.04);
+  padding-bottom: 0.6rem;
+}
+
+.yooki-insight-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.8rem;
+}
+
+.yooki-insight-box {
+  background: rgba(13, 13, 12, 0.5);
+  border: 1px solid rgba(250, 250, 250, 0.03);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.yooki-insight-box h5 {
+  font-family: monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: rgba(250, 250, 250, 0.35);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.yooki-insight-box p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.7);
+  line-height: 1.5;
+}
+
+.yooki-insight-box.recommendation p {
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+.yooki-insight-box.recommendation p span {
+  color: var(--color-upsc-amber);
+}
+
+.yooki-insight-box.alert p span {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 1024px) {
+  .yooki-simulator-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .yooki-insight-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .yooki-chat-terminal {
+    height: 420px;
+    padding: 1.5rem;
+  }
+}

@@ -1243,74 +1243,152 @@ const initInteractionEngine = () => {
       if (activeBtn) updateSlider(activeBtn);
     });
 
-    // B. Device Mode Tab Selector (Screen Explorer vs Live Video Demo)
-    const tabs = document.querySelectorAll('.upsc-tab-btn');
-    const explorerContent = document.getElementById('upsc-explorer-content');
-    const videoPane = document.getElementById('upsc-video-pane');
-    const demoVideo = document.getElementById('upsc-demo-video');
-
-    tabs.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tab = btn.getAttribute('data-upsc-tab');
-        tabs.forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
-
-        if (tab === 'demo') {
-          if (explorerContent) explorerContent.classList.remove('active');
-          if (videoPane) videoPane.classList.add('active');
-          if (demoVideo) {
-            demoVideo.play().catch(() => {});
-          }
-        } else {
-          if (explorerContent) explorerContent.classList.add('active');
-          if (videoPane) videoPane.classList.remove('active');
-          if (demoVideo) {
-            demoVideo.pause();
-          }
-        }
-      });
-    });
-
-    // C. Hotspot Swapping Logic
-    const hotspots = document.querySelectorAll('.upsc-hotspot');
-    const detailCards = document.querySelectorAll('.upsc-details-card');
-    const screenImg = document.querySelector('.upsc-explorer-screen-img');
-
-    const upscScreenMap = {
-      '1': 'https://framerusercontent.com/images/BlHKUcKAhGRXRgmgmPvNd4QN0.png',
-      '2': 'https://framerusercontent.com/images/n1fTFrLvMO2ePIv5Ut2swuAPgQ.png',
-      '3': 'https://framerusercontent.com/images/n4hXXzbAY1IBE7MzthqFPmAkkNo.jpg',
-      '4': 'https://framerusercontent.com/images/ZBJQxKvwANWPhQDwvjIJeyDd8f8.png'
+    // B. Yooki AI Conversational Mind-Map Simulator Data
+    const yookiSimulatorData = {
+      polity: {
+        title: 'Polity AI Assistant',
+        aspirantText: 'How should I approach Panchayati Raj amendments for GS Paper II?',
+        aiText: 'Focus on the 73rd and 74th Amendments. Combine this with the dynamic link to Federalism under Economy. Make sure to cross-reference Fiscal Devolution patterns from the 15th Finance Commission. This covers approx 12-15 marks annually.',
+        rec: 'Subject overlap detected: Link <span>Polity (Panchayati Raj)</span> with <span>Economy (Fiscal Devolution)</span> to solve 3 PYQs from last 5 years.',
+        alert: '<span>Good Progress:</span> You scored 82% in yesterday\'s Polity daily quiz. Keep up the consistency.'
+      },
+      economy: {
+        title: 'Economy AI Assistant',
+        aspirantText: 'Where does Fiscal Federalism link with Polity in the syllabus?',
+        aiText: 'Fiscal Federalism directly intersects with Article 280 (Finance Commission) and GST Council under Polity. Study tax devolution models, vertical vs horizontal imbalances, and recent state concerns on cooperative federalism.',
+        rec: 'Recommended study track: Review the <span>GST Council voting share structure</span> under Article 279A, then attempt the Economy Mock Test.',
+        alert: '<span>Concept Bottleneck:</span> Fiscal devolution has a low retention score. Attempting a short 5-question revision card session is recommended.'
+      },
+      environment: {
+        title: 'Environment AI Assistant',
+        aspirantText: 'Can we review my preparation levels for Environment and Ecology?',
+        aiText: 'Your Environment & Ecology module is currently at 41% mastery. Standard conventions like UNFCCC COP decisions and wildlife conservation reserves have been neglected recently. You last studied this 18 days ago.',
+        rec: 'Critical Focus: Revise <span>UNFCCC Paris Agreement targets</span> and India\'s updated NDC commitments before proceeding to other topics.',
+        alert: '<span>Prep Alert:</span> Environment is severely neglected. Coverage is only 12% in the last month (Target is 30%+).'
+      },
+      history: {
+        title: 'History AI Assistant',
+        aspirantText: 'How do I memorize the complex timeline from Swadeshi to Non-Cooperation Movement?',
+        aiText: 'Do not memorize rote dates. Instead, build associative node tracks: partition of Bengal (1905) led to Swadeshi, which paved the way for Home Rule League (1916), culminating in the Rowlatt Satyagraha and Non-Cooperation (1920). Let\'s walk through the transition.',
+        rec: 'Visual Aid: Open the <span>Interactive Swadeshi Timeline Mind-Map</span> in Yooki to view the causes, leaders, and consequences visually.',
+        alert: '<span>Revision Overdue:</span> Modern History has 4 pending review cards. Schedule a 10-minute active recall session tonight.'
+      },
+      current: {
+        title: 'Current Affairs Daily',
+        aspirantText: 'What are the main headlines from today\'s news that I need to connect to my GS Syllabus?',
+        aiText: 'Today\'s Supreme Court ruling on cooperative federalism and legislative powers is highly critical. It maps directly to GS Paper II (Polity - Federal Structure). I have already highlighted the key briefs and mapped them to your Polity revision deck.',
+        rec: 'Study Alert: A new Supreme Court federal ruling has been tagged directly to your <span>Polity Node</span>. Click to view the summary briefing.',
+        alert: '<span>Streak Alert:</span> Current Affairs daily summary has been checked. 12-day reading streak maintained!'
+      }
     };
 
-    hotspots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        const id = dot.getAttribute('data-upsc-hotspot');
-        if (!id) return;
+    let typingInterval = null;
 
-        hotspots.forEach(h => h.classList.remove('active'));
-        dot.classList.add('active');
-
-        if (screenImg && upscScreenMap[id]) {
-          screenImg.setAttribute('src', upscScreenMap[id]);
-          if (typeof gsap !== 'undefined') {
-            gsap.fromTo(screenImg, { opacity: 0.8 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+    const runTypewriter = (element, text, speed, callback) => {
+      if (typingInterval) {
+        clearInterval(typingInterval);
+        typingInterval = null;
+      }
+      element.textContent = '';
+      element.classList.add('yooki-typewriter-cursor');
+      let i = 0;
+      typingInterval = setInterval(() => {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          
+          // Auto scroll the chat body to bottom during typing
+          const chatBody = document.getElementById('yooki-chat-stream');
+          if (chatBody) {
+            chatBody.scrollTop = chatBody.scrollHeight;
           }
+        } else {
+          clearInterval(typingInterval);
+          typingInterval = null;
+          element.classList.remove('yooki-typewriter-cursor');
+          if (callback) callback();
         }
+      }, speed);
+    };
 
-        detailCards.forEach(card => {
-          card.classList.remove('active');
-          if (card.getAttribute('data-upsc-card') === id) {
-            card.classList.add('active');
-            if (typeof gsap !== 'undefined') {
-              gsap.fromTo(card, { opacity: 0, x: 15 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' });
-            }
-          }
-        });
+    const subjectNodes = document.querySelectorAll('.yooki-subject-node');
+    const chatTitle = document.getElementById('yooki-chat-title-text');
+    const chatStream = document.getElementById('yooki-chat-stream');
+    const recText = document.getElementById('yooki-insight-rec');
+    const alertText = document.getElementById('yooki-insight-alert');
+
+    const selectNode = (nodeId, isInitial = false) => {
+      const data = yookiSimulatorData[nodeId];
+      if (!data) return;
+
+      // Update active button
+      subjectNodes.forEach(node => {
+        if (node.getAttribute('data-yooki-node') === nodeId) {
+          node.classList.add('active');
+        } else {
+          node.classList.remove('active');
+        }
+      });
+
+      // Update title
+      if (chatTitle) chatTitle.textContent = data.title;
+
+      // Update insights immediately
+      if (recText) recText.innerHTML = data.rec;
+      if (alertText) alertText.innerHTML = data.alert;
+
+      // Premium micro-animation for insights
+      if (typeof gsap !== 'undefined') {
+        gsap.fromTo('.yooki-insight-box',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.1 }
+        );
+      }
+
+      // Re-create the bubbles
+      if (chatStream) {
+        chatStream.innerHTML = '';
+
+        // 1. Aspirant Bubble
+        const aspirantBubble = document.createElement('div');
+        aspirantBubble.className = 'yooki-chat-bubble aspirant';
+        aspirantBubble.innerHTML = `
+          <span class="yooki-bubble-sender">ASPIRANT</span>
+          <div class="yooki-bubble-text">${data.aspirantText}</div>
+        `;
+        chatStream.appendChild(aspirantBubble);
+
+        // 2. AI Bubble
+        const aiBubble = document.createElement('div');
+        aiBubble.className = 'yooki-chat-bubble ai';
+        aiBubble.innerHTML = `
+          <span class="yooki-bubble-sender">YOOKI AI</span>
+          <div class="yooki-bubble-text" id="yooki-active-typewriter"></div>
+        `;
+        chatStream.appendChild(aiBubble);
+
+        const typewriterEl = aiBubble.querySelector('#yooki-active-typewriter');
+        
+        if (isInitial) {
+          typewriterEl.textContent = data.aiText;
+          chatStream.scrollTop = chatStream.scrollHeight;
+        } else {
+          runTypewriter(typewriterEl, data.aiText, 15);
+        }
+      }
+    };
+
+    subjectNodes.forEach(node => {
+      node.addEventListener('click', () => {
+        const nodeId = node.getAttribute('data-yooki-node');
+        selectNode(nodeId);
       });
     });
 
-    // D. 4-Stage Study Stepper Logic
+    // Initialize with Polity default state (no typewriter immediately on load so it looks ready)
+    selectNode('polity', true);
+
+    // C. 4-Stage Study Stepper Logic
     const stepNodes = document.querySelectorAll('.upsc-step-node');
     const stepCards = document.querySelectorAll('[data-step-card].step-display-card');
     const progressBar = document.querySelector('.upsc-progress-line');
