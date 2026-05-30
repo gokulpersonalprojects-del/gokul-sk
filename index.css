@@ -1558,17 +1558,6 @@ body {
   width: 100% !important;
 }
 
-.work-section .flex-works a.single-featured-card {
-  width: 50% !important;
-  margin: 0 auto;
-}
-
-@media (max-width: 1023px) {
-  .work-section .flex-works a.single-featured-card {
-    width: 100% !important;
-  }
-}
-
 /* Card work standard styling */
 .card-work {
   display: flex;
