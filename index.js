@@ -1655,8 +1655,70 @@ const initInteractionEngine = () => {
     });
   };
 
-  initAboutTimelineSwitcher();
-};
+    initAboutTimelineSwitcher();
+
+    // 13. HOME PAGE MILESTONE SHOWCASE SYSTEM (3D Parallax & Drawer)
+    // ==========================================================================
+    const initHomeMilestoneInteractions = () => {
+      const cardWrapper = document.getElementById('certificate-tilt-card');
+      const innerCard = cardWrapper ? cardWrapper.querySelector('.milestone-framed-certificate') : null;
+      const toggleBtn = document.getElementById('btn-toggle-process-drawer');
+      const drawer = document.getElementById('home-milestone-drawer');
+
+      // 1. 3D Cursor Parallax Effect
+      if (cardWrapper && innerCard) {
+        cardWrapper.addEventListener('mousemove', (e) => {
+          const rect = cardWrapper.getBoundingClientRect();
+          
+          // Calculate cursor position relative to card boundaries (normalized from -0.5 to 0.5)
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          
+          // Compute tilt angles (max tilt of 12 degrees)
+          const tiltX = (0.5 - y) * 24;
+          const tiltY = (x - 0.5) * 24;
+          
+          // Apply 3D rotation with lift translation
+          innerCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(10px)`;
+          
+          // Update glare dynamic position properties
+          cardWrapper.style.setProperty('--mouse-x', `${x * 100}%`);
+          cardWrapper.style.setProperty('--mouse-y', `${y * 100}%`);
+        });
+
+        cardWrapper.addEventListener('mouseleave', () => {
+          // Reset dynamic transformations smoothly
+          innerCard.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        });
+      }
+
+      // 2. Expandable Pacing & Workflow Drawer
+      if (toggleBtn && drawer) {
+        toggleBtn.addEventListener('click', () => {
+          drawer.classList.toggle('expanded');
+          
+          const isExpanded = drawer.classList.contains('expanded');
+          toggleBtn.innerHTML = isExpanded 
+            ? `<span class="btn-icon">✨</span> Close Process Showcase` 
+            : `<span class="btn-icon">✨</span> Explore Post-Production Process`;
+
+          // Refresh GSAP ScrollTrigger to prevent any page scroll jump or alignment shifting
+          if (typeof ScrollTrigger !== 'undefined') {
+            setTimeout(() => ScrollTrigger.refresh(), 600);
+          }
+
+          // Smooth scroll to showcase
+          if (isExpanded) {
+            setTimeout(() => {
+              drawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+          }
+        });
+      }
+    };
+
+    initHomeMilestoneInteractions();
+  };
 
 
 // Bulletproof interaction engine initialization

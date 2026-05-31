@@ -6575,6 +6575,620 @@ body {
   font-size: 14px;
 }
 
+}
+
+/* ==========================================================================
+   25. HOME PAGE DYNAMIC MILESTONE SECTION (Ashes Short Film Showcase)
+   ========================================================================== */
+.home-milestone-section {
+  position: relative;
+  background-color: var(--color-black);
+  padding: 100px 0;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.home-milestone-section::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 5%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(207, 46, 46, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.home-milestone-section .milestone-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.milestone-section-header {
+  text-align: center;
+  margin-bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.milestone-eyebrow {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-red);
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.milestone-main-title {
+  font-family: var(--font-primary);
+  font-size: clamp(36px, 4.5vw, 64px);
+  font-weight: 800;
+  color: var(--color-white);
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.milestone-line-separator {
+  width: 80px;
+  height: 3px;
+  background-color: var(--color-red);
+  margin-bottom: 24px;
+}
+
+.milestone-subtitle {
+  font-family: var(--font-primary);
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.6);
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* Grid Layout */
+.milestone-grid-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* Left Column: 3D Frame & Parallax container */
+.milestone-showcase-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.milestone-3d-card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1.414;
+  transform-style: preserve-3d;
+  perspective: 1500px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.card-glare {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.12) 0%, transparent 60%);
+  border-radius: 12px;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: overlay;
+}
+
+.milestone-3d-card-wrapper:hover .card-glare {
+  opacity: 1;
+}
+
+/* Frame Mockup Styling */
+.milestone-framed-certificate {
+  width: 100%;
+  height: 100%;
+  background: #161616;
+  border-radius: 12px;
+  padding: 16px;
+  border: 14px solid #222221;
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.65), 
+              inset 0 0 0 1px rgba(255, 215, 0, 0.25),
+              0 0 30px rgba(207, 46, 46, 0.05);
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+.cert-frame-outer {
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid rgba(184, 144, 71, 0.6);
+  padding: 5px;
+  box-sizing: border-box;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.cert-frame-inner {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(184, 144, 71, 0.25);
+  background: #fbfbf9; /* parchment cream */
+  color: #1a1a19;
+  padding: clamp(14px, 2.5vw, 32px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.04);
+}
+
+.cert-frame-inner::before {
+  content: '';
+  position: absolute;
+  top: 10px; left: 10px; right: 10px; bottom: 10px;
+  border: 1px solid rgba(184, 144, 71, 0.15);
+  pointer-events: none;
+}
+
+/* Certificate Typography Details */
+.cert-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+}
+
+.cert-header {
+  margin-top: 5px;
+}
+
+.cert-logo-text {
+  font-family: var(--font-primary);
+  font-size: clamp(10px, 1.1vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #1a1a19;
+}
+
+.cert-motto {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(8px, 0.8vw, 10px);
+  font-weight: 500;
+  color: #b89047;
+  margin: 3px 0;
+  letter-spacing: 0.08em;
+}
+
+.cert-location {
+  font-family: var(--font-primary);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #666;
+}
+
+.cert-title {
+  font-family: var(--font-primary);
+  font-size: clamp(13px, 1.6vw, 20px);
+  font-weight: 800;
+  color: #8e1f1f;
+  letter-spacing: 0.05em;
+  border-bottom: 1.5px solid rgba(184, 144, 71, 0.3);
+  padding-bottom: 5px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.cert-recipient {
+  margin: 10px 0;
+}
+
+.recipient-label {
+  font-family: var(--font-primary);
+  font-size: clamp(9px, 0.9vw, 11px);
+  font-style: italic;
+  color: #555;
+  display: block;
+}
+
+.recipient-name {
+  font-family: var(--font-primary);
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 700;
+  color: #1a1a19;
+  text-decoration: underline;
+  text-decoration-color: rgba(184, 144, 71, 0.3);
+  text-underline-offset: 4px;
+  margin: 4px 0;
+  letter-spacing: 0.02em;
+}
+
+.recipient-sub {
+  font-family: var(--font-primary);
+  font-size: clamp(8px, 0.8vw, 10px);
+  color: #555;
+  display: block;
+}
+
+.cert-project {
+  margin: 5px 0;
+}
+
+.project-title {
+  font-family: var(--font-primary);
+  font-size: clamp(13px, 1.5vw, 18px);
+  font-weight: 800;
+  color: #8e1f1f;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.project-roles {
+  font-family: var(--font-primary);
+  font-size: clamp(8px, 0.9vw, 11px);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #b89047;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.cert-statement {
+  font-family: var(--font-primary);
+  font-size: clamp(8px, 0.95vw, 11.5px);
+  line-height: 1.5;
+  color: #333;
+  font-style: italic;
+  max-width: 95%;
+  margin: 8px 0;
+}
+
+.cert-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 10px;
+  margin-top: 10px;
+}
+
+.cert-signature-block {
+  text-align: left;
+}
+
+.signature-line {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(12px, 1.4vw, 16px);
+  font-style: italic;
+  color: #2b4570;
+  margin-bottom: 2px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  padding-right: 20px;
+}
+
+.signer-name {
+  font-family: var(--font-primary);
+  font-size: clamp(8px, 0.8vw, 10px);
+  font-weight: 700;
+  color: #1a1a19;
+}
+
+.signer-title {
+  font-family: var(--font-primary);
+  font-size: clamp(6.5px, 0.7vw, 8.5px);
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.cert-seal-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cert-seal {
+  width: clamp(40px, 4.5vw, 54px);
+  height: clamp(40px, 4.5vw, 54px);
+  border-radius: 50%;
+  border: 1.5px dashed #b89047;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgba(184, 144, 71, 0.04);
+}
+
+.seal-inner-text {
+  font-size: clamp(5px, 0.6vw, 7px);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #b89047;
+  text-align: center;
+  line-height: 1.1;
+  max-width: 80%;
+}
+
+.seal-star {
+  font-size: 6px;
+  color: #b89047;
+  margin-top: 1px;
+}
+
+.parallax-hint {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  color: rgba(250, 250, 250, 0.35);
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hint-icon {
+  font-size: 14px;
+}
+
+/* Right Column: Skills Cards & Controls */
+.milestone-showcase-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.milestone-skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 45px;
+}
+
+.milestone-skill-card {
+  display: flex;
+  gap: 20px;
+  background: rgba(250, 250, 250, 0.015);
+  border: 1px solid rgba(250, 250, 250, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.milestone-skill-card:hover {
+  background: rgba(255, 0, 0, 0.02);
+  border-color: rgba(207, 46, 46, 0.15);
+  transform: translateY(-2px);
+}
+
+.skill-card-icon {
+  font-size: 26px;
+  line-height: 1;
+  display: flex;
+  align-items: flex-start;
+  color: var(--color-red);
+}
+
+.skill-card-content h4 {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 6px;
+}
+
+.skill-card-content p {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.55);
+  line-height: 1.5;
+}
+
+.milestone-action-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.milestone-action-group .milestone-btn {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 14px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.milestone-action-group .milestone-btn.primary {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border: 1px solid var(--color-red);
+}
+
+.milestone-action-group .milestone-btn.primary:hover {
+  background-color: #ff2b2b;
+  border-color: #ff2b2b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(207, 46, 46, 0.35);
+}
+
+.milestone-action-group .milestone-btn.secondary {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid rgba(250, 250, 250, 0.15);
+}
+
+.milestone-action-group .milestone-btn.secondary:hover {
+  background-color: rgba(250, 250, 250, 0.05);
+  border-color: rgba(250, 250, 250, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Expandable Process Drawer */
+.milestone-process-drawer {
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  background: rgba(250, 250, 250, 0.01);
+  border-top: 1px solid transparent;
+  margin-top: 0;
+}
+
+.milestone-process-drawer.expanded {
+  max-height: 800px;
+  border-top: 1px solid rgba(250, 250, 250, 0.05);
+  margin-top: 50px;
+}
+
+.drawer-inner-container {
+  padding: 40px 0;
+}
+
+.drawer-title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-red);
+  letter-spacing: 0.15em;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.drawer-col {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.col-num {
+  font-family: var(--font-primary);
+  font-size: 40px;
+  font-weight: 900;
+  color: rgba(207, 46, 46, 0.15);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.drawer-col h4 {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.drawer-col p {
+  font-family: var(--font-primary);
+  font-size: 13.5px;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.5);
+  line-height: 1.6;
+}
+
+/* Full responsiveness styles */
+@media (max-width: 1199px) {
+  .milestone-grid-layout {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 991px) {
+  .milestone-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  .milestone-showcase-left {
+    margin-bottom: 20px;
+  }
+  .milestone-3d-card-wrapper {
+    max-width: 380px;
+  }
+  .drawer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-milestone-section {
+    padding: 60px 0;
+  }
+  .home-milestone-section .milestone-container {
+    padding: 0 20px;
+  }
+  .milestone-section-header {
+    margin-bottom: 40px;
+  }
+  .milestone-3d-card-wrapper {
+    max-width: 320px;
+  }
+  .cert-frame-inner {
+    padding: 16px;
+  }
+  .milestone-skills-list {
+    margin-bottom: 30px;
+  }
+  .milestone-skill-card {
+    padding: 16px;
+    gap: 14px;
+  }
+  .skill-card-content h4 {
+    font-size: 16px;
+  }
+  .skill-card-content p {
+    font-size: 13px;
+  }
+  .milestone-action-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  .milestone-action-group .milestone-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .drawer-inner-container {
+    padding: 30px 0;
+  }
+}
+
 @media (max-width: 767px) {
   .timeline-item.milestone-featured {
     margin-left: -8px;
@@ -6586,6 +7200,7 @@ body {
     top: 22px;
   }
 }
+
 
 
 
