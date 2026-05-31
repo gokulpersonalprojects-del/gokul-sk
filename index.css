@@ -8170,16 +8170,12 @@ body {
   pointer-events: none;
 }
 
-.ai-ux-art {
-  background: radial-gradient(circle at center, rgba(207, 46, 46, 0.25) 0%, #111 80%);
+.maps-art {
+  background: radial-gradient(circle at center, rgba(66, 133, 244, 0.25) 0%, #111 80%);
 }
 
-.erp-art {
-  background: radial-gradient(circle at center, rgba(184, 144, 71, 0.15) 0%, #111 80%);
-}
-
-.sound-pacing-art {
-  background: radial-gradient(circle at center, rgba(43, 69, 112, 0.25) 0%, #111 80%);
+.swiggy-art {
+  background: radial-gradient(circle at center, rgba(252, 128, 25, 0.2) 0%, #111 80%);
 }
 
 .art-badge {
