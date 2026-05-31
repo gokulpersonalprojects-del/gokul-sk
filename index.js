@@ -1818,6 +1818,86 @@ const initInteractionEngine = () => {
         // Initial run
         checkValue();
       });
+
+      // E. AJAX Form Submission via FormSubmit
+      const outreachForm = document.getElementById('contact-outreach-form');
+      const submitBtn = document.getElementById('btn-submit-contact-outreach');
+      const submitBtnText = submitBtn ? submitBtn.querySelector('span') : null;
+
+      if (outreachForm && submitBtn && submitBtnText) {
+        outreachForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          // Change button state to loading
+          submitBtn.disabled = true;
+          submitBtnText.textContent = "SENDING COLLABORATION REQUEST...";
+          submitBtn.style.opacity = "0.7";
+
+          // Gather form details
+          const formData = {
+            name: document.getElementById('contact-name').value,
+            email: document.getElementById('contact-email').value,
+            message: document.getElementById('contact-message').value
+          };
+
+          // Send AJAX request to FormSubmit.co
+          fetch('https://formsubmit.co/ajax/gokulskcmadom@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Success response
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "1";
+            submitBtnText.textContent = "SEND COLLABORATION REQUEST";
+            
+            // Reset input values
+            outreachForm.reset();
+            inputs.forEach(input => {
+              input.classList.remove('has-value');
+            });
+
+            // Trigger beautiful custom toast success banner!
+            const toastMessage = toastAlert.querySelector('.toast-message');
+            const toastIcon = toastAlert.querySelector('.toast-icon');
+            if (toastMessage) {
+              toastIcon.textContent = "🚀";
+              toastMessage.textContent = "Collaboration request successfully sent! Gokul will mail you shortly.";
+            }
+
+            toastAlert.classList.add('show');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+              toastAlert.classList.remove('show');
+            }, 5000);
+          })
+          .catch(error => {
+            console.error('Outreach submission error:', error);
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "1";
+            submitBtnText.textContent = "SEND COLLABORATION REQUEST";
+
+            // Trigger beautiful toast failure alert!
+            const toastMessage = toastAlert.querySelector('.toast-message');
+            const toastIcon = toastAlert.querySelector('.toast-icon');
+            if (toastMessage) {
+              toastIcon.textContent = "❌";
+              toastMessage.textContent = "Failed to send request. Please email gokulskcmadom@gmail.com directly.";
+            }
+
+            toastAlert.classList.add('show');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+              toastAlert.classList.remove('show');
+            }, 5000);
+          });
+        });
+      }
     };
 
     initContactHubInteractions();
