@@ -1595,6 +1595,67 @@ const initInteractionEngine = () => {
   };
 
   initWorkPageSwitcher();
+
+  // ==========================================================================
+  // 12. INTERACTIVE ABOUT TIMELINE SWITCHER SYSTEM
+  // ==========================================================================
+  const initAboutTimelineSwitcher = () => {
+    const timelineSwitcher = document.getElementById('about-timeline-switcher');
+    if (!timelineSwitcher) return;
+
+    const switcherBtns = timelineSwitcher.querySelectorAll('.case-mode-btn');
+    const slider = timelineSwitcher.querySelector('.switcher-bg-slider');
+    const panes = document.querySelectorAll('.timeline-pane');
+
+    const updateSlider = (activeBtn) => {
+      if (slider && activeBtn) {
+        slider.style.width = `${activeBtn.offsetWidth}px`;
+        slider.style.left = `${activeBtn.offsetLeft}px`;
+      }
+    };
+
+    // Set initial position
+    const activeBtn = timelineSwitcher.querySelector('.case-mode-btn.active');
+    if (activeBtn) {
+      setTimeout(() => updateSlider(activeBtn), 300);
+    }
+
+    switcherBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-timeline-tab');
+        switcherBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateSlider(btn);
+
+        panes.forEach(pane => {
+          pane.classList.remove('active');
+          if (pane.id === `timeline-pane-${tab}`) {
+            pane.classList.add('active');
+            
+            // GSAP entrance transition for the active timeline pane
+            if (typeof gsap !== 'undefined') {
+              gsap.fromTo(pane, 
+                { opacity: 0, y: 15 }, 
+                { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+              );
+            }
+          }
+        });
+
+        // Refresh GSAP ScrollTrigger to recalculate viewport bounding boxes
+        if (typeof ScrollTrigger !== 'undefined') {
+          setTimeout(() => ScrollTrigger.refresh(), 200);
+        }
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      const activeBtn = timelineSwitcher.querySelector('.case-mode-btn.active');
+      if (activeBtn) updateSlider(activeBtn);
+    });
+  };
+
+  initAboutTimelineSwitcher();
 };
 
 
