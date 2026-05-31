@@ -2671,7 +2671,15 @@ body {
   overflow-x: hidden;
 }
 
-.sub-page-section#section-about.active-section {
+.sub-page-section#section-work {
+  background-color: #000000 !important;
+  padding: 8rem 0 0 0 !important;
+  display: none;
+  overflow-x: hidden;
+}
+
+.sub-page-section#section-about.active-section,
+.sub-page-section#section-work.active-section {
   display: block !important;
 }
 
