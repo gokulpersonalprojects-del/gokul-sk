@@ -783,19 +783,57 @@ body {
     height: 100dvh !important;
   }
 
+  /* Center the masks-svgs-container so ART is in the middle of the viewport */
+  .masks-svgs-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   /* Make bottom corner texts (CREATE and DIFFERENT) thicker and bigger on mobile devices */
   .bottom-left-text,
   .bottom-right-text {
-    font-size: clamp(1.4rem, 6vw, 2.2rem) !important; /* Significantly bigger text on mobile */
-    font-weight: 800 !important; /* Thicker bold font-weight */
-    letter-spacing: 0.05em !important; /* Elegant modern spacing */
-    bottom: clamp(1.5rem, 6vw, 3rem) !important; /* Adjusted positioning for bottom bar clearance */
+    font-size: clamp(1.4rem, 6vw, 2.2rem) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+    bottom: clamp(1.5rem, 6vw, 3rem) !important;
   }
+  /* Center CREATE and DIFFERENT symmetrically */
   .bottom-left-text {
-    left: clamp(1.5rem, 6vw, 3rem) !important;
+    left: 50% !important;
+    transform: translateX(calc(-100% - 12px)) !important;
   }
   .bottom-right-text {
-    right: clamp(1.5rem, 6vw, 3rem) !important;
+    right: 50% !important;
+    transform: translateX(calc(100% + 12px)) !important;
+  }
+
+  /* Override entrance animations to land at centred position on mobile */
+  @keyframes hero-corner-reveal-left-mobile {
+    0% {
+      opacity: 0;
+      transform: translateX(calc(-100% - 52px));
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(calc(-100% - 12px));
+    }
+  }
+  @keyframes hero-corner-reveal-right-mobile {
+    0% {
+      opacity: 0;
+      transform: translateX(calc(100% + 52px));
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(calc(100% + 12px));
+    }
+  }
+  .preloader-complete .bottom-left-text {
+    animation: hero-corner-reveal-left-mobile 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards !important;
+  }
+  .preloader-complete .bottom-right-text {
+    animation: hero-corner-reveal-right-mobile 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards !important;
   }
 }
 
@@ -6584,10 +6622,26 @@ body {
    ========================================================================== */
 .home-milestone-section {
   position: relative;
-  background-color: var(--color-black);
+  background-color: #000000;
+  background: #000000;
   padding: 100px 0;
   overflow: hidden;
-  z-index: 10;
+  z-index: 20;
+  isolation: isolate;
+  /* Prevent hero bleed-through on scroll */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Solid black background lock — blocks any underlying layers */
+.home-milestone-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000000;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .home-milestone-section::before {
@@ -7654,7 +7708,255 @@ body {
   box-shadow: 0 4px 15px rgba(207, 46, 46, 0.35);
 }
 
-/* RIGHT COLUMN: outreach Form container */
+/* Resume banner dual action row */
+.resume-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* "View Resume" ghost button */
+.resume-pdf-view-btn {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-white);
+  background-color: transparent;
+  border: 1px solid rgba(250, 250, 250, 0.3);
+  padding: 12px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.resume-pdf-view-btn:hover {
+  background-color: rgba(250, 250, 250, 0.08);
+  border-color: rgba(250, 250, 250, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   RESUME PDF VIEWER MODAL
+   ========================================================================== */
+
+.resume-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.resume-modal.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.resume-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.resume-modal-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+  height: 92vh;
+  background: #0e0e0e;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(60px);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.06);
+}
+.resume-modal.open .resume-modal-wrapper {
+  transform: translateY(0);
+}
+
+/* Modal header bar */
+.resume-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+
+.resume-modal-badge {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-red);
+  background: rgba(207, 46, 46, 0.1);
+  border: 1px solid rgba(207, 46, 46, 0.2);
+  padding: 4px 10px;
+  border-radius: 50px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.resume-modal-title h3 {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0 0 2px 0;
+}
+.resume-modal-title p {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.45);
+  margin: 0;
+}
+
+.resume-modal-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resume-modal-download-btn {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-white);
+  background: var(--color-red);
+  border: 1px solid var(--color-red);
+  padding: 9px 18px;
+  border-radius: 50px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.resume-modal-download-btn:hover {
+  background: #ff2b2b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(207, 46, 46, 0.4);
+}
+
+.resume-modal-close-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: var(--color-white);
+}
+.resume-modal-close-btn:hover {
+  background: rgba(207, 46, 46, 0.2);
+  border-color: rgba(207, 46, 46, 0.5);
+}
+
+/* Modal body — PDF iframe area */
+.resume-modal-body {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.resume-pdf-frame-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.resume-pdf-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #fff;
+}
+
+/* Fallback if PDF doesn't load */
+.resume-pdf-fallback {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: rgba(250,250,250,0.5);
+  padding: 40px;
+}
+.resume-pdf-fallback.show {
+  display: flex;
+}
+.fallback-icon {
+  font-size: 56px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+.resume-pdf-fallback h4 {
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 8px;
+}
+.resume-pdf-fallback p {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .resume-modal-wrapper {
+    height: 95vh;
+    border-radius: 16px 16px 0 0;
+  }
+  .resume-modal-header {
+    padding: 16px 18px;
+  }
+  .resume-modal-title h3 {
+    font-size: 15px;
+  }
+  .resume-modal-download-btn span:first-of-type {
+    display: none;
+  }
+  .resume-banner-actions {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  .resume-pdf-view-btn,
+  .resume-pdf-download-btn {
+    justify-content: center;
+  }
+}
+
+
 .contact-hub-right {
   display: flex;
   flex-direction: column;

@@ -1835,13 +1835,17 @@ const initInteractionEngine = () => {
 
           // Gather form details
           const formData = {
+            access_key: '64e82c00-25a8-4157-85c9-a8ba8b9899f7',
+            subject: 'New Collaboration Request — Gokul SK Portfolio',
+            from_name: document.getElementById('contact-name').value,
             name: document.getElementById('contact-name').value,
             email: document.getElementById('contact-email').value,
-            message: document.getElementById('contact-message').value
+            message: document.getElementById('contact-message').value,
+            botcheck: ''
           };
 
-          // Send AJAX request to FormSubmit.co
-          fetch('https://formsubmit.co/ajax/gokulskcmadom@gmail.com', {
+          // Send AJAX request to Web3Forms
+          fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -1851,23 +1855,32 @@ const initInteractionEngine = () => {
           })
           .then(response => response.json())
           .then(data => {
-            // Success response
             submitBtn.disabled = false;
             submitBtn.style.opacity = "1";
             submitBtnText.textContent = "SEND COLLABORATION REQUEST";
-            
-            // Reset input values
-            outreachForm.reset();
-            inputs.forEach(input => {
-              input.classList.remove('has-value');
-            });
 
-            // Trigger beautiful custom toast success banner!
-            const toastMessage = toastAlert.querySelector('.toast-message');
-            const toastIcon = toastAlert.querySelector('.toast-icon');
-            if (toastMessage) {
-              toastIcon.textContent = "🚀";
-              toastMessage.textContent = "Collaboration request successfully sent! Gokul will mail you shortly.";
+            if (data.success) {
+              // Reset input values
+              outreachForm.reset();
+              inputs.forEach(input => {
+                input.classList.remove('has-value');
+              });
+
+              // Trigger success toast
+              const toastMessage = toastAlert.querySelector('.toast-message');
+              const toastIcon = toastAlert.querySelector('.toast-icon');
+              if (toastMessage) {
+                toastIcon.textContent = "🚀";
+                toastMessage.textContent = "Collaboration request successfully sent! Gokul will mail you shortly.";
+              }
+            } else {
+              // API returned success:false
+              const toastMessage = toastAlert.querySelector('.toast-message');
+              const toastIcon = toastAlert.querySelector('.toast-icon');
+              if (toastMessage) {
+                toastIcon.textContent = "❌";
+                toastMessage.textContent = data.message || "Failed to send. Please email gokulskcmadom@gmail.com directly.";
+              }
             }
 
             toastAlert.classList.add('show');
@@ -1959,6 +1972,60 @@ const initInteractionEngine = () => {
     };
 
     initBlogsCategoryFilters();
+
+    // 16. RESUME PDF VIEWER MODAL
+    // ==========================================================================
+    const initResumeViewerModal = () => {
+      const openBtn = document.getElementById('btn-open-resume-viewer');
+      const modal = document.getElementById('resume-viewer-modal');
+      const closeBtn = document.getElementById('resume-modal-close-btn');
+      const overlay = document.getElementById('resume-modal-close-overlay');
+      const iframe = document.getElementById('resume-pdf-iframe');
+      const fallback = document.getElementById('resume-pdf-fallback');
+
+      if (!openBtn || !modal) return;
+
+      let iframeLoaded = false;
+
+      const openResumeModal = () => {
+        // Lazy-load: only set src on first open
+        if (!iframeLoaded && iframe) {
+          iframe.src = './gokul_sk_resume.pdf';
+          iframeLoaded = true;
+
+          // Show fallback if iframe fails to load within 5s (e.g. mobile browser)
+          const loadTimeout = setTimeout(() => {
+            if (iframe.contentDocument === null) {
+              iframe.style.display = 'none';
+              if (fallback) fallback.classList.add('show');
+            }
+          }, 5000);
+
+          iframe.onload = () => clearTimeout(loadTimeout);
+        }
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeResumeModal = () => {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      };
+
+      openBtn.addEventListener('click', openResumeModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeResumeModal);
+      if (overlay) overlay.addEventListener('click', closeResumeModal);
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+          closeResumeModal();
+        }
+      });
+    };
+
+    initResumeViewerModal();
   };
 
 
