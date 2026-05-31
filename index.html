@@ -848,10 +848,295 @@
     </section>
 
     <section class="sub-page-section" id="section-work">
-      <div class="section-content">
-        <h2>The Work</h2>
-        <p>This is a custom section placeholder for the Work index template page.</p>
+      <!-- Section Back Button and Outline Heading -->
+      <div class="about-hero-header">
+        <a href="#home" class="about-back-btn" data-section="home">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to Home
+        </a>
+        <div class="about-hero-title">
+          <h2 class="fade-up">THE WORK</h2>
+          <h3 class="fade-up">GSK &times; PORTFOLIO</h3>
+        </div>
       </div>
+
+      <div class="work-page-container">
+        
+        <!-- Premium sliding switcher pill -->
+        <div class="case-mode-switcher fade-up" id="work-page-switcher">
+          <div class="switcher-bg-slider" style="background-color: var(--color-red); width: 50%; left: 5px;"></div>
+          <button class="case-mode-btn active" data-work-tab="ux">🎯 UX Case Studies</button>
+          <button class="case-mode-btn" data-work-tab="video">🎬 Video Editing</button>
+        </div>
+
+        <!-- Dynamic Content Panes -->
+        <div class="work-panes-wrapper">
+          
+          <!-- PANE 1: UX Case Studies Grid -->
+          <div class="work-pane active" id="work-pane-ux">
+            <div class="ux-cards-grid">
+              
+              <!-- Card 01: Netflix Shopping -->
+              <a href="#case-netflix" data-section="case-netflix" class="ux-card fade-up">
+                <div class="ux-card-inner">
+                  <div class="ux-card-visual">
+                    <div class="ux-card-gradient" style="--g1:#0d0d1a;--g2:#141426;--accent:#e50914"></div>
+                    <img src="netflix_merch.jpg" alt="Netflix Shopping & Fan Community" class="ux-card-img">
+                    <div class="ux-card-number">01</div>
+                    <div class="ux-card-hover-cta">View Case Study →</div>
+                  </div>
+                  <div class="ux-card-body">
+                    <div class="ux-card-meta">
+                      <span class="ux-tag">E-Commerce</span>
+                      <span class="ux-tag">Entertainment</span>
+                    </div>
+                    <h3 class="ux-card-title">Netflix Shopping</h3>
+                    <p class="ux-card-desc">Bridging entertainment and shopping. Allows fans to buy exclusive merch while watching and share reviews with the fan community.</p>
+                    <div class="ux-card-tools">
+                      <span class="ux-tool">Figma</span>
+                      <span class="ux-tool">User Research</span>
+                      <span class="ux-tool">Framer</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 02: Cendrol Expense Tracker -->
+              <a href="#case-crm" data-section="case-crm" class="ux-card fade-up">
+                <div class="ux-card-inner">
+                  <div class="ux-card-visual">
+                    <div class="ux-card-gradient" style="--g1:#0a0f1a;--g2:#0d1a2d;--accent:#3b82f6"></div>
+                    <img src="crm_site.jpg" alt="Cendrol Expense Tracker UI" class="ux-card-img">
+                    <div class="ux-card-number">02</div>
+                    <div class="ux-card-hover-cta">View Case Study →</div>
+                  </div>
+                  <div class="ux-card-body">
+                    <div class="ux-card-meta">
+                      <span class="ux-tag">Fintech</span>
+                      <span class="ux-tag">Operations</span>
+                    </div>
+                    <h3 class="ux-card-title">Cendrol Expense Tracker</h3>
+                    <p class="ux-card-desc">Redesigning the expense reimbursement experience for on-site engineers — tracking submitted expenses, structuring approvals, and establishing legibility signals.</p>
+                    <div class="ux-card-tools">
+                      <span class="ux-tool">Figma</span>
+                      <span class="ux-tool">User Research</span>
+                      <span class="ux-tool">System Mapping</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 03: Cendrol Field CRM -->
+              <a href="#case-auth" data-section="case-auth" class="ux-card fade-up">
+                <div class="ux-card-inner">
+                  <div class="ux-card-visual">
+                    <div class="ux-card-gradient" style="--g1:#0a120a;--g2:#0f200f;--accent:#22c55e"></div>
+                    <img src="designergram.jpg" alt="Cendrol Field CRM UI" class="ux-card-img">
+                    <div class="ux-card-number">03</div>
+                    <div class="ux-card-hover-cta">View Case Study →</div>
+                  </div>
+                  <div class="ux-card-body">
+                    <div class="ux-card-meta">
+                      <span class="ux-tag">B2B CRM</span>
+                      <span class="ux-tag">Construction</span>
+                    </div>
+                    <h3 class="ux-card-title">Cendrol Field CRM</h3>
+                    <p class="ux-card-desc">Redesigning Cendrol's stationary CRM into an on-the-go mobile assistant for field representatives and site engineers to capture data in real time.</p>
+                    <div class="ux-card-tools">
+                      <span class="ux-tool">Figma</span>
+                      <span class="ux-tool">Wireframing</span>
+                      <span class="ux-tool">Prototyping</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 04: Yooki UPSC Companion -->
+              <a href="#case-upsc" data-section="case-upsc" class="ux-card fade-up">
+                <div class="ux-card-inner">
+                  <div class="ux-card-visual">
+                    <div class="ux-card-gradient" style="--g1:#1a0f0a;--g2:#2d170f;--accent:#f59e0b"></div>
+                    <img src="upsc_prep.jpg" alt="Yooki UPSC Companion UI" class="ux-card-img">
+                    <div class="ux-card-number">04</div>
+                    <div class="ux-card-hover-cta">View Case Study →</div>
+                  </div>
+                  <div class="ux-card-body">
+                    <div class="ux-card-meta">
+                      <span class="ux-tag">EdTech</span>
+                      <span class="ux-tag">Civil Services</span>
+                    </div>
+                    <h3 class="ux-card-title">Yooki (UPSC Companion)</h3>
+                    <p class="ux-card-desc">Turning India's toughest exam syllabus into a structured, AI-powered study companion with daily paths and cognitive mastery insights.</p>
+                    <div class="ux-card-tools">
+                      <span class="ux-tool">AI Integration</span>
+                      <span class="ux-tool">IA Architecture</span>
+                      <span class="ux-tool">Spaced Repetition</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 05: Pocket to Payback -->
+              <a href="https://gokulux.framer.website/project-1" target="_blank" class="ux-card fade-up">
+                <div class="ux-card-inner">
+                  <div class="ux-card-visual">
+                    <div class="ux-card-gradient" style="--g1:#1a0a0a;--g2:#2d0f0f;--accent:#cf2e2e"></div>
+                    <img src="pocket_payback_thumbnail.png" alt="Pocket to Payback UI" class="ux-card-img">
+                    <div class="ux-card-number">05</div>
+                    <div class="ux-card-hover-cta">View Case Study →</div>
+                  </div>
+                  <div class="ux-card-body">
+                    <div class="ux-card-meta">
+                      <span class="ux-tag">Fintech</span>
+                      <span class="ux-tag">UX Design</span>
+                    </div>
+                    <h3 class="ux-card-title">Pocket to Payback</h3>
+                    <p class="ux-card-desc">Helping engineers get their money back faster — streamlining expense reimbursement flows to cut processing time and eliminate friction.</p>
+                    <div class="ux-card-tools">
+                      <span class="ux-tool">Figma</span>
+                      <span class="ux-tool">Maze</span>
+                      <span class="ux-tool">Prototyping</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Card 06: Onboarding Redesign -->
+              <a href="https://gokulux.framer.website" target="_blank" class="ux-card fade-up">
+                <div class="ux-card-inner">
+                  <div class="ux-card-visual">
+                    <div class="ux-card-gradient" style="--g1:#0a120a;--g2:#0f200f;--accent:#22c55e"></div>
+                    <img src="onboarding_thumbnail.png" alt="Onboarding Redesign UI" class="ux-card-img">
+                    <div class="ux-card-number">06</div>
+                    <div class="ux-card-hover-cta">View Case Study →</div>
+                  </div>
+                  <div class="ux-card-body">
+                    <div class="ux-card-meta">
+                      <span class="ux-tag">UX Flows</span>
+                      <span class="ux-tag">Authentication</span>
+                    </div>
+                    <h3 class="ux-card-title">Onboarding Redesign</h3>
+                    <p class="ux-card-desc">Optimising authentication and onboarding through multiple flow modes — reducing drop-off by rethinking the first-touch user experience.</p>
+                    <div class="ux-card-tools">
+                      <span class="ux-tool">Figma</span>
+                      <span class="ux-tool">ProtoPie</span>
+                      <span class="ux-tool">Usability Testing</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+            </div><!-- /ux-cards-grid -->
+          </div><!-- /work-pane-ux -->
+
+          <!-- PANE 2: Video Editing Showcase -->
+          <div class="work-pane" id="work-pane-video">
+            <div class="video-grid-layout">
+              
+              <!-- Video Card 1 -->
+              <div class="video-work-card open-modal fade-up" data-video="trailer_1_full.mp4">
+                <div class="video-card-container">
+                  <div class="video-preview-container">
+                    <video autoplay loop muted playsinline class="video-preview">
+                      <source src="trailer_1_preview.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-badge-overlay">
+                      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="32" fill="#cf2e2e"/>
+                        <path d="M42 32L27 41L27 23L42 32Z" fill="#FAFAFA"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="card-work-text-content">
+                    <h2>Extraction x Dhruva Natchathiram</h2>
+                    <div class="subtitle-line">
+                      <div class="line"></div>
+                      <h3>Cinematic Mashup / Action Cut</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video Card 2 -->
+              <div class="video-work-card open-modal fade-up" data-video="trailer_2_full.mp4">
+                <div class="video-card-container">
+                  <div class="video-preview-container">
+                    <video autoplay loop muted playsinline class="video-preview">
+                      <source src="trailer_2_preview.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-badge-overlay">
+                      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="32" fill="#cf2e2e"/>
+                        <path d="M42 32L27 41L27 23L42 32Z" fill="#FAFAFA"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="card-work-text-content">
+                    <h2>Kanthara - Folklore Action</h2>
+                    <div class="subtitle-line">
+                      <div class="line"></div>
+                      <h3>Narrative Pacing / Sound Design</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video Card 3 -->
+              <div class="video-work-card open-modal fade-up" data-video="trailer_3_full.mp4">
+                <div class="video-card-container">
+                  <div class="video-preview-container">
+                    <video autoplay loop muted playsinline class="video-preview">
+                      <source src="trailer_3_preview.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-badge-overlay">
+                      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="32" fill="#cf2e2e"/>
+                        <path d="M42 32L27 41L27 23L42 32Z" fill="#FAFAFA"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="card-work-text-content">
+                    <h2>Mahaan - Stylized Cut</h2>
+                    <div class="subtitle-line">
+                      <div class="line"></div>
+                      <h3>Dynamic Pacing / Color Grading</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Video Card 4 -->
+              <div class="video-work-card open-modal fade-up" data-video="trailer_4_full.mp4">
+                <div class="video-card-container">
+                  <div class="video-preview-container">
+                    <video autoplay loop muted playsinline class="video-preview">
+                      <source src="trailer_4_preview.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-badge-overlay">
+                      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="32" fill="#cf2e2e"/>
+                        <path d="M42 32L27 41L27 23L42 32Z" fill="#FAFAFA"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="card-work-text-content">
+                    <h2>John Wick x Leo</h2>
+                    <div class="subtitle-line">
+                      <div class="line"></div>
+                      <h3>High-Octane Mashup / VFX Integration</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /video-grid-layout -->
+          </div><!-- /work-pane-video -->
+
+        </div><!-- /work-panes-wrapper -->
+      </div><!-- /work-page-container -->
     </section>
 
     <section class="sub-page-section" id="section-blogs">

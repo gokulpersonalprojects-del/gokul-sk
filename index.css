@@ -6300,3 +6300,172 @@ body {
 .crm-toast-overlay.error { border-color: rgba(239, 68, 68, 0.35); }
 .crm-toast-overlay.error .crm-toast-icon { background-color: #ef4444; box-shadow: 0 0 8px #ef4444; }
 
+/* ==========================================================================
+   17. UNIFIED WORK PAGE MULTI-DOMAIN STYLING
+   ========================================================================== */
+.work-page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 6rem) clamp(4rem, 8vw, 9rem) clamp(1.25rem, 5vw, 6rem);
+  width: 100%;
+}
+
+.work-panes-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.work-pane {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  width: 100%;
+}
+
+.work-pane.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive Grid for widescreen video card trailers */
+.video-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .video-grid-layout {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* Premium styling for standard static video cards */
+.video-grid-layout .video-work-card {
+  width: 100%;
+  opacity: 0.95;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, opacity 0.3s ease;
+}
+
+.video-grid-layout .video-work-card:hover {
+  transform: translateY(-6px);
+  opacity: 1;
+}
+
+.video-grid-layout .video-preview-container {
+  position: relative;
+  aspect-ratio: 16/9;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: #0c0c0c;
+  border: 1px solid rgba(250, 250, 250, 0.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-grid-layout .video-work-card:hover .video-preview-container {
+  border-color: rgba(207, 46, 46, 0.4);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 15px rgba(207, 46, 46, 0.15);
+}
+
+.video-grid-layout .video-preview {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.video-grid-layout .video-work-card:hover .video-preview {
+  transform: scale(1.05);
+}
+
+.video-grid-layout .play-badge-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0.85;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.video-grid-layout .video-work-card:hover .play-badge-overlay {
+  transform: translate(-50%, -50%) scale(1.05);
+  opacity: 1;
+}
+
+.video-grid-layout .play-badge-overlay svg circle {
+  transition: fill 0.3s ease;
+}
+
+.video-grid-layout .video-work-card:hover .play-badge-overlay svg circle {
+  fill: #ff2b2b;
+}
+
+.video-grid-layout .card-work-text-content {
+  margin-top: 1.2rem;
+}
+
+/* Custom Work switcher styles to keep it fully aligned with BBDO luxury aesthetics */
+#work-page-switcher {
+  position: relative;
+  display: flex;
+  background: rgba(255, 255, 255, 0.03);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  padding: 5px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto clamp(2.5rem, 4vw, 4rem) auto;
+  z-index: 5;
+}
+
+#work-page-switcher .switcher-bg-slider {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  background-color: var(--color-red);
+  border-radius: 9999px;
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  box-shadow: 0 4px 15px rgba(207, 46, 46, 0.4);
+}
+
+#work-page-switcher .case-mode-btn {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: rgba(250, 250, 250, 0.55);
+  font-family: var(--font-primary);
+  font-size: clamp(12px, 1.2vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#work-page-switcher .case-mode-btn.active {
+  color: var(--color-white);
+}
+
+#work-page-switcher .case-mode-btn:hover:not(.active) {
+  color: rgba(250, 250, 250, 0.85);
+}
+
+
