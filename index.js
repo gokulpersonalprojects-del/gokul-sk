@@ -63,59 +63,6 @@ const initInteractionEngine = () => {
     document.fonts.ready.then(forceSvgRepaint);
   }
 
-  // --- HERO VIDEO CASCADING FAIL-SAFE ---
-  const heroVideo = document.querySelector('.video-banner');
-  if (heroVideo) {
-    const localUrl = "https://drive.google.com/uc?export=download&id=1oIANK-efq_hxiQvC6yQ99pvkZdmzB9Tn";
-    const primaryUrl = "hero_video.mp4";
-    const fallbackUrl = "https://impactbbdo.com/wp-content/uploads/2025/06/Intro-Video_1440x734_CLEAN_NO-LOGO.mp4";
-    
-    let currentSourceIndex = 0; // 0: localUrl, 1: primaryUrl, 2: fallbackUrl
-    const sourcesList = [localUrl, primaryUrl, fallbackUrl];
-
-    const loadNextSource = () => {
-      currentSourceIndex++;
-      if (currentSourceIndex < sourcesList.length) {
-        const nextUrl = sourcesList[currentSourceIndex];
-        console.log(`Hero video source failed. Falling back to: ${nextUrl}`);
-        
-        heroVideo.removeAttribute('src');
-        const sources = heroVideo.querySelectorAll('source');
-        sources.forEach(source => source.parentNode.removeChild(source));
-        
-        heroVideo.setAttribute('src', nextUrl);
-        heroVideo.load();
-        heroVideo.play().catch(() => {});
-        resetTimer();
-      }
-    };
-
-    // Listen for error loading local/network files
-    heroVideo.addEventListener('error', (e) => {
-      if (currentSourceIndex < sourcesList.length - 1) {
-        loadNextSource();
-      }
-    }, true);
-
-    // Bulletproof backup timer: if video metadata doesn't load in 4 seconds, try next source
-    let fallbackTimeout = null;
-    const resetTimer = () => {
-      if (fallbackTimeout) clearTimeout(fallbackTimeout);
-      fallbackTimeout = setTimeout(() => {
-        if (heroVideo.readyState < 1 && currentSourceIndex < sourcesList.length - 1) { // HAVE_NOTHING
-          loadNextSource();
-        }
-      }, 4000);
-    };
-
-    heroVideo.addEventListener('loadedmetadata', () => {
-      if (fallbackTimeout) clearTimeout(fallbackTimeout);
-    });
-
-    // Start initial backup timer
-    resetTimer();
-  }
-
 
   // --- PILL VIDEOS FAIL-SAFE ---
   const pillPills = document.querySelectorAll('.video-badge-pill');
