@@ -2679,7 +2679,8 @@ body {
 }
 
 .sub-page-section#section-about.active-section,
-.sub-page-section#section-work.active-section {
+.sub-page-section#section-work.active-section,
+.sub-page-section#section-contact.active-section {
   display: block !important;
 }
 
@@ -7189,17 +7190,877 @@ body {
   }
 }
 
-@media (max-width: 767px) {
-  .timeline-item.milestone-featured {
-    margin-left: -8px;
-    padding: 16px;
-    padding-left: 16px;
-  }
-  .timeline-marker.milestone-star {
     left: -18px;
     top: 22px;
   }
 }
+
+/* ==========================================================================
+   26. INTERACTIVE CONTACT & RESUME HUB SECTION STYLING
+   ========================================================================== */
+.contact-hub-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 4% 100px 4%;
+  position: relative;
+  z-index: 10;
+}
+
+.contact-hub-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* LEFT COLUMN: digital CV Explorer Card */
+.resume-explorer-card {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-sizing: border-box;
+}
+
+.resume-explorer-header {
+  margin-bottom: 35px;
+}
+
+.explorer-badge {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-red);
+  background-color: rgba(207, 46, 46, 0.08);
+  padding: 4px 12px;
+  border-radius: 50px;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  border: 1px solid rgba(207, 46, 46, 0.15);
+  text-transform: uppercase;
+}
+
+.resume-explorer-header h4 {
+  font-family: var(--font-primary);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-white);
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.resume-explorer-header p {
+  font-family: var(--font-primary);
+  font-size: 14.5px;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.55);
+  line-height: 1.6;
+}
+
+/* Navigation tabs */
+.resume-tabs-nav {
+  position: relative;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 5px;
+  border-radius: 12px;
+  margin-bottom: 35px;
+  overflow: hidden;
+}
+
+.resume-nav-btn {
+  position: relative;
+  flex: 1;
+  font-family: var(--font-primary);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(250, 250, 250, 0.5);
+  background: transparent;
+  border: none;
+  padding: 12px 0;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.3s ease;
+  border-radius: 8px;
+}
+
+.resume-nav-btn:hover {
+  color: var(--color-white);
+}
+
+.resume-nav-btn.active {
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Panes layout */
+.resume-pane {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  box-sizing: border-box;
+}
+
+.resume-pane.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Timeline specific CV rules */
+.cv-timeline {
+  position: relative;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.cv-timeline::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.cv-timeline-item {
+  position: relative;
+}
+
+.cv-timeline-marker {
+  position: absolute;
+  left: -24px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #000000;
+  border: 2px solid var(--color-red);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.cv-timeline-item:hover .cv-timeline-marker {
+  background-color: var(--color-red);
+  transform: scale(1.2);
+}
+
+.cv-timeline-content {
+  padding-left: 12px;
+  transition: transform 0.3s ease;
+}
+
+.cv-timeline-item:hover .cv-timeline-content {
+  transform: translateX(4px);
+}
+
+.cv-date {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-red);
+  letter-spacing: 0.08em;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.cv-timeline-content h5 {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 2px;
+}
+
+.cv-company {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(250, 250, 250, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.cv-timeline-content p {
+  font-family: var(--font-primary);
+  font-size: 13.5px;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.5);
+  line-height: 1.6;
+}
+
+/* Skills Vector Layout */
+.cv-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 35px;
+}
+
+.skills-category-card {
+  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.skills-category-card h6,
+.skills-meters-block h6,
+.cv-certifications-block h6 {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-red);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.skills-tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag-badge {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(250, 250, 250, 0.7);
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 6px 12px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.skill-tag-badge:hover {
+  background-color: rgba(207, 46, 46, 0.1);
+  border-color: rgba(207, 46, 46, 0.3);
+  color: var(--color-white);
+  transform: translateY(-1px);
+}
+
+.skills-meters-block {
+  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.meter-item {
+  margin-bottom: 18px;
+}
+
+.meter-item:last-child {
+  margin-bottom: 0;
+}
+
+.meter-info {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-primary);
+  font-size: 13.5px;
+  font-weight: 400;
+  color: rgba(250, 250, 250, 0.75);
+  margin-bottom: 6px;
+}
+
+.meter-track {
+  width: 100%;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.meter-bar {
+  height: 100%;
+  background-color: var(--color-red);
+  border-radius: 50px;
+  transition: width 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Education List */
+.cv-education-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 35px;
+}
+
+.edu-item {
+  display: flex;
+  gap: 16px;
+  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.edu-icon {
+  font-size: 24px;
+}
+
+.edu-details .edu-date {
+  font-family: var(--font-primary);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-red);
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.edu-details h5 {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 2px;
+}
+
+.edu-inst {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  color: rgba(250, 250, 250, 0.45);
+  display: block;
+}
+
+/* Certifications */
+.cv-certifications-block {
+  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.cert-badge-card {
+  display: flex;
+  gap: 12px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 14px;
+  border-radius: 10px;
+  align-items: center;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.cert-badge-card:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
+}
+
+.cert-badge-icon {
+  font-size: 16px;
+}
+
+.cert-badge-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cert-badge-text strong {
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-white);
+  line-height: 1.3;
+}
+
+.cert-badge-text span {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: rgba(250, 250, 250, 0.4);
+  margin-top: 2px;
+}
+
+/* Download CV Banner */
+.resume-download-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(207, 46, 46, 0.03);
+  border: 1px dashed rgba(207, 46, 46, 0.2);
+  border-radius: 12px;
+  padding: 24px 30px;
+  margin-top: 40px;
+  box-sizing: border-box;
+  gap: 30px;
+}
+
+.banner-text h5 {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 4px;
+}
+
+.banner-text p {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(250, 250, 250, 0.5);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.resume-pdf-download-btn {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-white);
+  background-color: var(--color-red);
+  border: 1px solid var(--color-red);
+  padding: 12px 24px;
+  border-radius: 50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resume-pdf-download-btn:hover {
+  background-color: #ff2b2b;
+  border-color: #ff2b2b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(207, 46, 46, 0.35);
+}
+
+/* RIGHT COLUMN: outreach Form container */
+.contact-hub-right {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.outreach-form-container {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 35px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-sizing: border-box;
+}
+
+.form-badge, .grid-badge {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--color-red);
+  background-color: rgba(207, 46, 46, 0.08);
+  padding: 3px 10px;
+  border-radius: 50px;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  border: 1px solid rgba(207, 46, 46, 0.12);
+}
+
+.outreach-form-container h4,
+.social-specular-block h4 {
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-white);
+  letter-spacing: 0.02em;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+/* Form layout inputs */
+.contact-glass-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-row-two {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  position: relative;
+  width: 100%;
+}
+
+.form-input {
+  width: 100%;
+  font-family: var(--font-primary);
+  font-size: 14.5px;
+  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(207, 46, 46, 0.5);
+  box-shadow: 0 0 15px rgba(207, 46, 46, 0.1);
+}
+
+.form-label {
+  position: absolute;
+  left: 20px;
+  top: 18px;
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(250, 250, 250, 0.4);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+/* Floating behavior using focus & value states */
+.form-input:focus ~ .form-label,
+.form-input:valid ~ .form-label,
+.form-input.has-value ~ .form-label {
+  top: -8px;
+  left: 12px;
+  font-size: 9px;
+  color: var(--color-red);
+  background-color: #111;
+  padding: 0 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(207, 46, 46, 0.15);
+}
+
+.form-input.textarea {
+  resize: none;
+}
+
+.form-submit-btn {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-submit-btn:hover {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  box-shadow: 0 6px 20px rgba(207, 46, 46, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-arrow {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.form-submit-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Social Tile System */
+.social-specular-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.social-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.social-tile:hover {
+  transform: translateY(-2px);
+}
+
+.tile-bg-glow {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at var(--tile-x, 50%) var(--tile-y, 50%), rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.social-tile:hover .tile-bg-glow {
+  opacity: 1;
+}
+
+.tile-icon {
+  font-size: 26px;
+  z-index: 2;
+}
+
+.tile-info {
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.tile-label {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(250, 250, 250, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.tile-value {
+  font-family: var(--font-primary);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-white);
+  word-break: break-all;
+}
+
+.tile-badge-overlay {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 8px;
+  font-weight: 800;
+  color: #ffd700;
+  background-color: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.tile-badge-overlay.dial {
+  color: var(--color-red);
+  background-color: rgba(207, 46, 46, 0.08);
+  border-color: rgba(207, 46, 46, 0.15);
+}
+
+.social-tile:hover .tile-badge-overlay {
+  transform: scale(1.05);
+}
+
+/* Copy Email widget tile spec */
+.social-tile.email-tile {
+  cursor: pointer;
+}
+
+.tile-copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.3s ease;
+}
+
+.tile-copy-btn:hover {
+  background-color: var(--color-white);
+  color: var(--color-black) !important;
+  border-color: var(--color-white);
+}
+
+.copy-icon {
+  font-size: 11px;
+}
+
+/* Custom glow borders per platform */
+.social-tile.portfolio-tile:hover {
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.05);
+}
+
+.social-tile.email-tile:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.03);
+}
+
+.social-tile.phone-tile:hover {
+  border-color: rgba(207, 46, 46, 0.3);
+  box-shadow: 0 10px 30px rgba(207, 46, 46, 0.05);
+}
+
+.social-tile.linkedin-tile:hover {
+  border-color: rgba(0, 119, 181, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 119, 181, 0.05);
+}
+
+.social-tile.behance-tile:hover {
+  border-color: rgba(5, 62, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(5, 62, 255, 0.05);
+}
+
+.social-tile.medium-tile:hover {
+  border-color: rgba(250, 250, 250, 0.2);
+  box-shadow: 0 10px 30px rgba(250, 250, 250, 0.03);
+}
+
+/* Floating Toast Alert Banner */
+.glass-toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  z-index: 9999999;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transform: translateY(100px) scale(0.9);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glass-toast.show {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.toast-icon {
+  font-size: 18px;
+  color: #ffd700;
+}
+
+.toast-message {
+  font-family: var(--font-primary);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+/* RESPONSIVE SCALING */
+@media (max-width: 1199px) {
+  .contact-hub-grid {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 991px) {
+  .contact-hub-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-hub-container {
+    padding: 0 20px 60px 20px;
+  }
+  .resume-explorer-card {
+    padding: 24px;
+  }
+  .resume-explorer-header {
+    margin-bottom: 25px;
+  }
+  .resume-tabs-nav {
+    margin-bottom: 25px;
+  }
+  .resume-nav-btn {
+    font-size: 12.5px;
+    padding: 10px 0;
+  }
+  .cv-skills-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .skills-category-card, .skills-meters-block, .cv-certifications-block, .edu-item {
+    padding: 16px;
+  }
+  .cert-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .resume-download-banner {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+  .resume-pdf-download-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .outreach-form-container {
+    padding: 24px;
+  }
+  .form-row-two {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .social-specular-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 
 
 

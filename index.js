@@ -1718,6 +1718,109 @@ const initInteractionEngine = () => {
     };
 
     initHomeMilestoneInteractions();
+
+    // 14. INTERACTIVE CONTACT & RESUME HUB SYSTEM
+    // ==========================================================================
+    const initContactHubInteractions = () => {
+      // A. Resume Explorer Tab Switcher
+      const navBtns = document.querySelectorAll('.resume-nav-btn');
+      const cvPanes = document.querySelectorAll('.resume-pane');
+
+      navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTab = btn.getAttribute('data-cv-tab');
+          
+          // Toggle active buttons
+          navBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Toggle active content panes with entry animations
+          cvPanes.forEach(pane => {
+            pane.classList.remove('active');
+            if (pane.id === `cv-pane-${targetTab}`) {
+              pane.classList.add('active');
+              
+              // Apply entry reveal
+              if (typeof gsap !== 'undefined') {
+                gsap.fromTo(pane, 
+                  { opacity: 0, y: 10 }, 
+                  { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+                );
+              }
+            }
+          });
+
+          // Refresh GSAP ScrollTrigger to ensure bounds remain perfectly aligned
+          if (typeof ScrollTrigger !== 'undefined') {
+            setTimeout(() => ScrollTrigger.refresh(), 100);
+          }
+        });
+      });
+
+      // B. Specular mouse tracking reflection on social tiles
+      const socialTiles = document.querySelectorAll('.social-tile');
+      socialTiles.forEach(tile => {
+        tile.addEventListener('mousemove', (e) => {
+          const rect = tile.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          tile.style.setProperty('--tile-x', `${x * 100}%`);
+          tile.style.setProperty('--tile-y', `${y * 100}%`);
+        });
+      });
+
+      // C. Copy Email Clipboard functionality & Toast Notification Alert
+      const emailCopyBtn = document.getElementById('tile-copy-email');
+      const toastAlert = document.getElementById('toast-alert');
+      let toastTimeout = null;
+
+      if (emailCopyBtn && toastAlert) {
+        emailCopyBtn.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent standard click navigation if wrapped
+          
+          const emailText = 'gokulskcmadom@gmail.com';
+          
+          navigator.clipboard.writeText(emailText).then(() => {
+            // Show toast popup
+            toastAlert.classList.add('show');
+            
+            // Clear prior timeout to prevent quick triggers from bugging
+            if (toastTimeout) clearTimeout(toastTimeout);
+            
+            // Hide toast automatically after 3 seconds
+            toastTimeout = setTimeout(() => {
+              toastAlert.classList.remove('show');
+            }, 3000);
+          }).catch(err => {
+            console.error('Failed to copy email address: ', err);
+          });
+        });
+      }
+
+      // D. Floating Labels Input Active Classes
+      const inputs = document.querySelectorAll('.form-input');
+      inputs.forEach(input => {
+        // Toggle value presence check classes
+        const checkValue = () => {
+          if (input.value.trim() !== "") {
+            input.classList.add('has-value');
+          } else {
+            input.classList.remove('has-value');
+          }
+        };
+
+        input.addEventListener('input', checkValue);
+        input.addEventListener('focus', () => {
+          input.classList.add('has-value');
+        });
+        input.addEventListener('blur', checkValue);
+        
+        // Initial run
+        checkValue();
+      });
+    };
+
+    initContactHubInteractions();
   };
 
 
