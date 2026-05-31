@@ -1821,6 +1821,64 @@ const initInteractionEngine = () => {
     };
 
     initContactHubInteractions();
+
+    // 15. INSIGHTS BLOG CATEGORY FILTER & REFLECTION SYSTEM
+    // ==========================================================================
+    const initBlogsCategoryFilters = () => {
+      const filterBtns = document.querySelectorAll('.blog-filter-btn');
+      const postCards = document.querySelectorAll('.blog-post-card');
+
+      // A. Tab Category Filtering
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filterValue = btn.getAttribute('data-blog-filter');
+
+          // Toggle active button class
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Filter card visibilities with entry animations
+          postCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+
+            if (filterValue === 'all' || category === filterValue) {
+              card.style.display = 'flex';
+              
+              // Apply entry reveal
+              if (typeof gsap !== 'undefined') {
+                gsap.fromTo(card, 
+                  { opacity: 0, scale: 0.96, y: 10 }, 
+                  { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+                );
+              } else {
+                card.style.opacity = '1';
+              }
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          // Refresh GSAP ScrollTrigger to ensure bounds remain perfectly aligned
+          if (typeof ScrollTrigger !== 'undefined') {
+            setTimeout(() => ScrollTrigger.refresh(), 100);
+          }
+        });
+      });
+
+      // B. Specular card glare reflection tracking
+      const cardWrappers = document.querySelectorAll('.blog-card-image-wrapper');
+      cardWrappers.forEach(wrap => {
+        wrap.addEventListener('mousemove', (e) => {
+          const rect = wrap.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          wrap.style.setProperty('--bg-x', `${x * 100}%`);
+          wrap.style.setProperty('--bg-y', `${y * 100}%`);
+        });
+      });
+    };
+
+    initBlogsCategoryFilters();
   };
 
 
