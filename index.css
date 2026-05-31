@@ -6491,5 +6491,102 @@ body {
   transform: translateY(0);
 }
 
+/* ==========================================================================
+   24. FEATURED TIMELINE MILESTONE STYLING (Ashes Short Film)
+   ========================================================================== */
+.timeline-item.milestone-featured {
+  background: rgba(255, 0, 0, 0.03);
+  border: 1px dashed rgba(255, 0, 0, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  margin-left: -15px;
+  padding-left: 24px;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.timeline-item.milestone-featured:hover {
+  background: rgba(255, 0, 0, 0.06);
+  border-color: rgba(255, 0, 0, 0.4);
+  box-shadow: 0 10px 40px rgba(255, 0, 0, 0.05);
+}
+
+.timeline-marker.milestone-star {
+  border-color: #ffd700;
+  background-color: #000000;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  z-index: 3;
+  transition: background-color 0.4s ease, transform 0.4s ease;
+  left: -22px;
+  top: 30px;
+}
+
+.timeline-item.milestone-featured:hover .timeline-marker.milestone-star {
+  background-color: #ffd700;
+  transform: scale(1.3) rotate(72deg);
+}
+
+.milestone-badge {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffd700;
+  background-color: rgba(255, 215, 0, 0.1);
+  padding: 4px 10px;
+  border-radius: 50px;
+  letter-spacing: 0.1em;
+  width: fit-content;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.milestone-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.milestone-btn:hover {
+  background-color: var(--color-white);
+  color: var(--color-black) !important;
+  border-color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+}
+
+.milestone-btn .btn-icon {
+  font-size: 14px;
+}
+
+@media (max-width: 767px) {
+  .timeline-item.milestone-featured {
+    margin-left: -8px;
+    padding: 16px;
+    padding-left: 16px;
+  }
+  .timeline-marker.milestone-star {
+    left: -18px;
+    top: 22px;
+  }
+}
+
+
 
 
