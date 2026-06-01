@@ -6768,16 +6768,18 @@ body {
    ========================================================================== */
 .home-milestone-section {
   position: relative;
-  background-color: #000000;
-  background: #000000;
-  padding: 100px 0;
+  background-color: #000000 !important;
+  background: #000000 !important;
+  padding: 160px 0; /* Upgraded top/bottom padding for spacious breathing room */
   overflow: hidden;
-  z-index: 20;
+  z-index: 99 !important; /* Forces this section on top of all fixed/fixed-parallax hero elements */
   isolation: isolate;
-  /* Prevent hero bleed-through on scroll */
-  transform: translateZ(0);
+  /* Force distinct GPU compositing layer to prevent mobile bleed-through */
+  transform: translate3d(0, 0, 0) !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
   will-change: transform;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Solid black background lock — blocks any underlying layers */
@@ -7351,7 +7353,7 @@ body {
 
 @media (max-width: 767px) {
   .home-milestone-section {
-    padding: 60px 0;
+    padding: 110px 0 !important;
   }
   .home-milestone-section .milestone-container {
     padding: 0 20px;
