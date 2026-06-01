@@ -2026,6 +2026,72 @@ const initInteractionEngine = () => {
     };
 
     initResumeViewerModal();
+
+    // 17. UX CASE STUDIES - 3D INTERACTIVE TILT & RADIAL SPOTLIGHT
+    // ==========================================================================
+    const initUxCardInteractions = () => {
+      const uxCards = document.querySelectorAll('.ux-card:not(.ux-card--soon)');
+      
+      uxCards.forEach(card => {
+        // Dynamic Glare Injection
+        if (!card.querySelector('.ux-card-glare')) {
+          const glare = document.createElement('div');
+          glare.className = 'ux-card-glare';
+          card.appendChild(glare);
+        }
+
+        // Dynamic Scanline Injection in the Visual area
+        const visual = card.querySelector('.ux-card-visual');
+        if (visual && !visual.querySelector('.ux-card-scanline')) {
+          const scanline = document.createElement('div');
+          scanline.className = 'ux-card-scanline';
+          visual.appendChild(scanline);
+        }
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          
+          // Normalized coordinates relative to card center (-0.5 to 0.5)
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          
+          // Spotlight position coordinates
+          card.style.setProperty('--mx', `${px * 100}%`);
+          card.style.setProperty('--my', `${py * 100}%`);
+          
+          // Tilt rotation angles (max tilt of 10 degrees)
+          const maxTilt = 10;
+          const rx = (0.5 - py) * maxTilt * 2;
+          const ry = (px - 0.5) * maxTilt * 2;
+          
+          card.style.setProperty('--rx', `${rx}deg`);
+          card.style.setProperty('--ry', `${ry}deg`);
+          
+          // Parallax inner layers translation (pixel movements)
+          const imgShiftX = (px - 0.5) * -10;
+          const imgShiftY = (py - 0.5) * -10;
+          card.style.setProperty('--px-x', `${imgShiftX}px`);
+          card.style.setProperty('--px-y', `${imgShiftY}px`);
+          
+          const numShiftX = (px - 0.5) * 15;
+          const numShiftY = (py - 0.5) * 15;
+          card.style.setProperty('--num-x', `${numShiftX}px`);
+          card.style.setProperty('--num-y', `${numShiftY}px`);
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          // Reset all variables smoothly
+          card.style.setProperty('--rx', '0deg');
+          card.style.setProperty('--ry', '0deg');
+          card.style.setProperty('--px-x', '0px');
+          card.style.setProperty('--px-y', '0px');
+          card.style.setProperty('--num-x', '0px');
+          card.style.setProperty('--num-y', '0px');
+        });
+      });
+    };
+
+    initUxCardInteractions();
   };
 
 
