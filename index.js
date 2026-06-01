@@ -2092,6 +2092,73 @@ const initInteractionEngine = () => {
     };
 
     initUxCardInteractions();
+
+    // 18. HOME PAGE WORK GRID - 3D TILT & MAGICAL CURSOR GLIDE
+    // ==========================================================================
+    const initCardWorkInteractions = () => {
+      const workCards = document.querySelectorAll('.card-work');
+      
+      workCards.forEach(card => {
+        // Dynamic Glare Injection in the image-container area
+        const imgContainer = card.querySelector('.image-container');
+        if (imgContainer && !imgContainer.querySelector('.card-work-glare')) {
+          const glare = document.createElement('div');
+          glare.className = 'card-work-glare';
+          imgContainer.appendChild(glare);
+        }
+
+        // Dynamic Scanline Injection inside image-container
+        if (imgContainer && !imgContainer.querySelector('.card-work-scanline')) {
+          const scanline = document.createElement('div');
+          scanline.className = 'card-work-scanline';
+          imgContainer.appendChild(scanline);
+        }
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          
+          // Normalized coordinates relative to card center (-0.5 to 0.5)
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          
+          // Spotlight position coordinates
+          card.style.setProperty('--mx', `${px * 100}%`);
+          card.style.setProperty('--my', `${py * 100}%`);
+          
+          // 3D Tilt rotation angles (subtle max tilt of 8 degrees)
+          const maxTilt = 8;
+          const rx = (0.5 - py) * maxTilt * 2;
+          const ry = (px - 0.5) * maxTilt * 2;
+          
+          card.style.setProperty('--rx', `${rx}deg`);
+          card.style.setProperty('--ry', `${ry}deg`);
+          
+          // Parallax inner layers translation (pixel movements)
+          const imgShiftX = (px - 0.5) * -12;
+          const imgShiftY = (py - 0.5) * -12;
+          card.style.setProperty('--px-x', `${imgShiftX}px`);
+          card.style.setProperty('--px-y', `${imgShiftY}px`);
+          
+          // Magnetic subtitle shift
+          const subShiftX = (px - 0.5) * 8;
+          const subShiftY = (py - 0.5) * 8;
+          card.style.setProperty('--num-x', `${subShiftX}px`);
+          card.style.setProperty('--num-y', `${subShiftY}px`);
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          // Reset all variables smoothly
+          card.style.setProperty('--rx', '0deg');
+          card.style.setProperty('--ry', '0deg');
+          card.style.setProperty('--px-x', '0px');
+          card.style.setProperty('--px-y', '0px');
+          card.style.setProperty('--num-x', '0px');
+          card.style.setProperty('--num-y', '0px');
+        });
+      });
+    };
+
+    initCardWorkInteractions();
   };
 
 
