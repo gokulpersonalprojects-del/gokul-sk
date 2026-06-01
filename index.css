@@ -8761,6 +8761,63 @@ body {
   }
 }
 
+/* ==========================================================================
+   26. RESPONSIVE UNIFIED SPACING SYSTEM (CONSISTENT MOBILE SPACINGS & PADDINGS)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  /* 1. Opaque and spacious homepage sections (100px top/bottom, 20px sides) */
+  .we-are-section,
+  .work-section,
+  .ux-studies-section,
+  .video-works-section {
+    padding-top: 100px !important;
+    padding-bottom: 100px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  
+  /* Milestone container alignment */
+  .home-milestone-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .home-milestone-section .milestone-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* 2. Sub-Pages Top-Offset Header Spacing - 120px to clear fixed navigation bar */
+  .sub-page-section,
+  .case-study-section {
+    padding: 120px 20px 80px 20px !important;
+  }
+
+  .case-study-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    gap: 3.5rem !important; /* Unified mobile case section gap */
+  }
+
+  /* Blogs Page grid container override for consistency */
+  .blogs-grid-container {
+    padding: 0 0 60px 0 !important; /* Managed by .sub-page-section padding */
+  }
+
+  /* 3. Margin Resets for Grid Alignments on Small Screens */
+  .works-inside-grid {
+    gap: 2.5rem !important;
+  }
+
+  .ux-cards-grid {
+    gap: 2rem !important;
+  }
+
+  .video-work-card {
+    margin-bottom: 2.5rem !important;
+  }
+}
+
+
 
 
 
