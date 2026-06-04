@@ -317,15 +317,26 @@ body {
   display: inline-block;
 }
 
-.menu-icon-container {
+button.menu-icon-container {
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
   transition: transform var(--transition-fast);
 }
 
-.menu-icon-container:hover {
+button.menu-icon-container:hover {
   transform: scale(1.08);
+}
+
+button.menu-icon-container:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 4px;
 }
 
 /* --------------------------------------------------------------------------
@@ -361,15 +372,26 @@ body {
   margin-bottom: clamp(2rem, 8vw, 4rem);
 }
 
-.menu-close-icon {
+button.menu-close-icon {
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
   transition: transform var(--transition-fast);
 }
 
-.menu-close-icon:hover {
+button.menu-close-icon:hover {
   transform: scale(1.08) rotate(90deg);
+}
+
+button.menu-close-icon:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 4px;
 }
 
 .nav-info-container {
@@ -8814,6 +8836,36 @@ body {
 
   .video-work-card {
     margin-bottom: 2.5rem !important;
+  }
+
+  /* 4. Accessibility Touch Target Standardizations (Min 44x44px target) */
+  .resume-nav-btn,
+  .about-back-btn,
+  .resume-pdf-view-btn,
+  .resume-pdf-download-btn,
+  .primary-button,
+  .btn-we-are-contact,
+  .form-submit-btn,
+  .blog-filter-btn {
+    min-height: 44px !important;
+  }
+
+  /* Focus visible outlines for keyboard control visibility */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-red) !important;
+    outline-offset: 4px !important;
+  }
+
+  /* 5. Typography Readability Scaling */
+  .ux-tag {
+    font-size: 11px !important;
+    padding: 0.35em 0.8em !important;
+  }
+  .ux-tool {
+    font-size: 12px !important;
   }
 }
 

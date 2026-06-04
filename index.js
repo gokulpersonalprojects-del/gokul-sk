@@ -193,12 +193,20 @@ const initInteractionEngine = () => {
   // ==========================================================================
   // 2. NAV DRAWER CONTROLLER
   // ==========================================================================
+  let lastActiveElement = null;
+
   const openMenu = () => {
     if (menuDrawer) {
+      lastActiveElement = document.activeElement;
       menuDrawer.classList.add('open');
       // Prevent body scrolling when overlay is active
       document.body.style.overflow = 'hidden';
       if (lenis) lenis.stop();
+
+      // Focus close button for keyboard navigation accessibility
+      setTimeout(() => {
+        if (closeNavBtn) closeNavBtn.focus();
+      }, 100);
     }
   };
 
@@ -208,6 +216,11 @@ const initInteractionEngine = () => {
       // Re-enable body scroll if not viewing an overlay modal
       document.body.style.overflow = '';
       if (lenis) lenis.start();
+
+      // Restore focus to the element that triggered menu open
+      if (lastActiveElement) {
+        lastActiveElement.focus();
+      }
     }
   };
 
@@ -219,6 +232,31 @@ const initInteractionEngine = () => {
     menuDrawer.addEventListener('click', (e) => {
       if (e.target === menuDrawer) {
         closeMenu();
+      }
+    });
+
+    // Accessibility Keyboard Focus Trap inside Navigation Drawer
+    menuDrawer.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusableElements = Array.from(menuDrawer.querySelectorAll(focusableSelectors));
+        
+        if (focusableElements.length === 0) return;
+        
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (e.shiftKey) { // Shift + Tab: wrap to bottom
+          if (document.activeElement === firstElement) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else { // Tab: wrap to top
+          if (document.activeElement === lastElement) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
       }
     });
   }
