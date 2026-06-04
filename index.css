@@ -8807,6 +8807,18 @@ button.menu-close-icon:focus-visible {
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
+  .milestone-3d-card-wrapper {
+    max-width: 440px !important;
+    width: 100% !important;
+    margin: 0 auto 30px auto !important;
+  }
+  .milestone-framed-certificate {
+    border-width: 8px !important;
+    padding: 8px !important;
+  }
+  .cert-frame-inner {
+    padding: 14px !important;
+  }
 
   /* 2. Sub-Pages Top-Offset Header Spacing - 120px to clear fixed navigation bar */
   .sub-page-section,
@@ -8825,20 +8837,59 @@ button.menu-close-icon:focus-visible {
     padding: 0 0 60px 0 !important; /* Managed by .sub-page-section padding */
   }
 
-  /* 3. Margin Resets for Grid Alignments on Small Screens */
+  /* 3. Horizontal swipeable carousels on mobile to prevent endless vertical scroll fatigue */
+  .ux-cards-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 16px !important;
+    padding: 10px 4px 24px 4px !important;
+    margin-left: -20px !important; /* Bleed out to screen edges for true mobile feel */
+    margin-right: -20px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important; /* Hide scrollbar for Firefox */
+  }
+  .ux-cards-grid::-webkit-scrollbar {
+    display: none !important; /* Hide scrollbar for Chrome/Safari */
+  }
+  .ux-cards-grid .ux-card {
+    flex: 0 0 85% !important; /* Card takes up 85% of screen width, exposing the next card partially to invite swiping */
+    scroll-snap-align: center !important;
+    height: auto !important;
+  }
+
+  .horizontal-video-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 16px !important;
+    padding: 10px 4px 24px 4px !important;
+    margin-left: -20px !important; /* Bleed out to screen edges for true mobile feel */
+    margin-right: -20px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .horizontal-video-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+  .horizontal-video-grid .video-work-card {
+    flex: 0 0 85% !important;
+    scroll-snap-align: center !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* 4. Margin Resets for Grid Alignments on Small Screens */
   .works-inside-grid {
     gap: 2.5rem !important;
   }
 
-  .ux-cards-grid {
-    gap: 2rem !important;
-  }
-
-  .video-work-card {
-    margin-bottom: 2.5rem !important;
-  }
-
-  /* 4. Accessibility Touch Target Standardizations (Min 44x44px target) */
+  /* 5. Accessibility Touch Target Standardizations (Min 44x44px target) */
   .resume-nav-btn,
   .about-back-btn,
   .resume-pdf-view-btn,
@@ -8859,7 +8910,7 @@ button.menu-close-icon:focus-visible {
     outline-offset: 4px !important;
   }
 
-  /* 5. Typography Readability Scaling */
+  /* 6. Typography Readability Scaling */
   .ux-tag {
     font-size: 11px !important;
     padding: 0.35em 0.8em !important;
