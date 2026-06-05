@@ -812,50 +812,29 @@ button.menu-close-icon:focus-visible {
     justify-content: center;
   }
 
-  /* Make bottom corner texts (CREATE and DIFFERENT) thicker and bigger on mobile devices */
+  /* Position bottom corner texts (CREATE and DIFFERENT) at screen edges with thin weight on mobile */
   .bottom-left-text,
   .bottom-right-text {
-    font-size: clamp(1.4rem, 6vw, 2.2rem) !important;
-    font-weight: 800 !important;
+    font-size: clamp(1.2rem, 5vw, 1.8rem) !important;
+    font-weight: 300 !important; /* Thinner elegant typography */
     letter-spacing: 0.05em !important;
     bottom: clamp(1.5rem, 6vw, 3rem) !important;
   }
-  /* Center CREATE and DIFFERENT symmetrically */
+  
   .bottom-left-text {
-    left: 50% !important;
-    transform: translateX(calc(-100% - 12px)) !important;
+    left: clamp(1.5rem, 6vw, 3rem) !important;
+    transform: none !important;
   }
   .bottom-right-text {
-    right: 50% !important;
-    transform: translateX(calc(100% + 12px)) !important;
+    right: clamp(1.5rem, 6vw, 3rem) !important;
+    transform: none !important;
   }
 
-  /* Override entrance animations to land at centred position on mobile */
-  @keyframes hero-corner-reveal-left-mobile {
-    0% {
-      opacity: 0;
-      transform: translateX(calc(-100% - 52px));
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(calc(-100% - 12px));
-    }
-  }
-  @keyframes hero-corner-reveal-right-mobile {
-    0% {
-      opacity: 0;
-      transform: translateX(calc(100% + 52px));
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(calc(100% + 12px));
-    }
-  }
   .preloader-complete .bottom-left-text {
-    animation: hero-corner-reveal-left-mobile 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards !important;
+    animation: hero-corner-reveal-left 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards !important;
   }
   .preloader-complete .bottom-right-text {
-    animation: hero-corner-reveal-right-mobile 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards !important;
+    animation: hero-corner-reveal-right 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards !important;
   }
 }
 
