@@ -2250,8 +2250,72 @@ button.menu-close-icon:focus-visible {
 /* Grid */
 .ux-cards-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 @media (min-width: 640px) { .ux-cards-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .ux-cards-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1280px) { .ux-cards-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1024px) { .ux-cards-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1280px) { .ux-cards-grid { grid-template-columns: repeat(5, 1fr); } }
+
+/* Avatar Showcase Layout for Clients */
+.ux-avatar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+.ux-avatar-img {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.08);
+  background: #0d0d0d;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  z-index: 2;
+}
+.ux-card:hover .ux-avatar-img {
+  transform: scale(1.08);
+  border-color: var(--accent);
+}
+.ux-avatar-glow {
+  position: absolute;
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  filter: blur(18px);
+  opacity: 0.15;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+.ux-card:hover .ux-avatar-glow {
+  opacity: 0.55;
+  transform: scale(1.15);
+}
+.ux-followers-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(var(--accent-rgb), 0.2);
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  padding: 0.2em 0.6em;
+  border-radius: 9999px;
+  margin-left: auto;
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.1);
+}
+.ux-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+  color: #0095f6;
+  vertical-align: middle;
+}
+
 
 /* Card */
 .ux-card {
