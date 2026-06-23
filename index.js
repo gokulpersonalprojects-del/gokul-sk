@@ -2027,6 +2027,27 @@ const initInteractionEngine = () => {
     };
 
     initCardWorkInteractions();
+
+    // Play/pause on hover for portfolio and trailer videos to use start frame as thumbnail
+    const initKolderHoverVideos = () => {
+      const links = document.querySelectorAll('.kolder-work-link');
+      links.forEach(link => {
+        const video = link.querySelector('.kolder-work-video');
+        if (video) {
+          video.autoplay = false;
+          video.pause();
+          
+          link.addEventListener('mouseenter', () => {
+            video.play().catch(() => {});
+          });
+          link.addEventListener('mouseleave', () => {
+            video.pause();
+            video.currentTime = 0; // Reset to starting frame
+          });
+        }
+      });
+    };
+    initKolderHoverVideos();
   };
 
 
